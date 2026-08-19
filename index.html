@@ -135,6 +135,13 @@
     border-radius:50%; background:var(--bg);
     box-shadow:0 0 0 2px var(--green), 0 0 0 8px rgba(15,157,88,.1);
   }
+  .day summary{isolation:isolate; overflow:hidden}
+  .day summary::after{                 /* 跟隨滑鼠的淡綠光暈，比照 .grp summary::before */
+    content:""; position:absolute; inset:0; z-index:-1; opacity:0;
+    background:radial-gradient(12rem circle at var(--mx,50%) var(--my,50%),
+      rgba(15,157,88,.18), transparent 70%);
+  }
+  .day summary:hover::after,.day summary:focus-within::after{opacity:1}
   .day summary:hover{background:var(--green-mist-2)}
   .day summary:focus-visible{outline:2px solid var(--green-deep); outline-offset:4px}
   .day[open] summary{background:var(--green-mist-2); border-radius:20px 20px 0 0}
@@ -184,12 +191,21 @@
     font-size:.69rem; color:var(--green-deep); letter-spacing:.19em;
     white-space:nowrap; flex:none; font-weight:600;
   }
-  .site .ttl{font-weight:600; font-size:1.06rem; letter-spacing:.02em; color:var(--ink)}
+  .site .ttl{font-weight:600; font-size:1.06rem; letter-spacing:.02em; color:var(--ink); flex:1 1 16rem}
+  .site .ttl .sub{
+    display:block; font-size:.78rem; font-weight:300;
+    color:var(--ink-soft); margin-top:3px; letter-spacing:0;
+  }
   .site .hint{
-    font-size:.73rem; color:var(--ink-soft); margin-left:auto;
-    letter-spacing:.1em; flex:none;
+    font-size:.73rem; color:var(--ink-soft); letter-spacing:.1em; flex:none;
   }
   .site[open] .hint{opacity:0}
+  .site .arw{
+    flex:none; width:38px; height:38px; border-radius:50%;
+    background:var(--green-deep); color:#fff; display:grid; place-items:center;
+    font-size:1rem; margin-left:auto;
+  }
+  .site[open] .arw{transform:rotate(90deg)}
   .site .body{
     background:var(--green-mist); border-radius:0 0 20px 20px;
     padding:26px 30px 30px; color:var(--ink-soft); font-size:.94rem; font-weight:300;
@@ -197,15 +213,26 @@
   .site .body .lede{max-width:none; margin-bottom:24px; font-size:.97rem}
 
   /* 三時代：橫向並列，以直線分隔 */
+  /* 三時代軸線：一條線串三個節點，沿用綠廊時間軸語彙 */
   .eras{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:0;
-    margin:0 0 28px; border-top:1px solid var(--green-mist);
+    display:grid; grid-template-columns:repeat(3,1fr);
+    margin:10px 0 30px; position:relative; padding-top:34px;
   }
-  .era{padding:16px 20px 14px; border-left:1px solid var(--green-mist)}
-  .era:first-child{border-left:none; padding-left:0}
+  .eras::before{                      /* 軸線：從第一個節點連到第三個節點 */
+    content:""; position:absolute; top:18px; left:6px; width:calc(66.66% + 6px); height:2px;
+    background:linear-gradient(90deg,
+      rgba(15,157,88,.5), rgba(15,157,88,.5) 60%, rgba(15,157,88,.25));
+  }
+  .era{position:relative; padding:0 20px 0 0}
+  .era::before{                       /* 節點圓點，置於標籤正上方 */
+    content:""; position:absolute; top:-21px; left:1px;
+    width:11px; height:11px; border-radius:50%; background:var(--green-mist);
+    box-shadow:0 0 0 2px var(--green), 0 0 0 7px rgba(15,157,88,.12);
+  }
+  .era:last-child::before{background:var(--green)}   /* 「今日」為實心，標示現在 */
   .era .yr{
     display:block; font-size:.65rem; font-weight:600; color:var(--green-deep);
-    letter-spacing:.19em; margin-bottom:6px;
+    letter-spacing:.19em; margin-bottom:5px;
   }
   .era .what{color:var(--ink); font-weight:500; font-size:1rem}
   .era .what .en{
@@ -218,9 +245,19 @@
   /* 圖在淡綠底上，淺邊框幾乎看不見；用白色襯底讓資訊圖與底色分離 */
   .fig .mount{
     display:block; background:#fff; padding:12px; border-radius:16px;
-    box-shadow:0 1px 3px rgba(28,42,35,.06);
+    box-shadow:0 1px 3px rgba(28,42,35,.06); position:relative;
   }
   .fig img{display:block; width:100%; height:auto; border-radius:8px; background:#fff}
+  /* 四個基地的可 hover 區塊。底圖是點陣（Google Maps 截圖），橢圓為目測描出的概略範圍 */
+  .zones{
+    position:absolute; inset:12px; width:calc(100% - 24px); height:calc(100% - 24px);
+    border-radius:8px; overflow:hidden; pointer-events:none;
+  }
+  .zone{
+    fill:transparent; stroke:transparent; stroke-width:3;
+    pointer-events:auto; cursor:pointer;
+  }
+  .zone.on{fill:rgba(15,157,88,.20); stroke:var(--green-deep)}
   .fig .cap{
     display:block; margin-top:12px; font-size:.78rem; line-height:1.7;
     color:var(--ink-soft); font-weight:300;
@@ -228,11 +265,14 @@
   .fig .cap .src{display:block; font-size:.71rem; margin-top:2px}
 
   /* 四個基地：兩欄，單邊色帶 */
-  .sites{display:grid; grid-template-columns:repeat(2,1fr); gap:2px 26px}
+  .sites{display:grid; grid-template-columns:repeat(2,1fr); gap:10px 12px}
   .srow{
     display:grid; grid-template-columns:66px 1fr; gap:16px; align-items:baseline;
-    padding:14px 0 14px 16px; border-left:3px solid var(--green-mist-2);
+    padding:16px 20px; border-radius:18px; background:var(--green-mist-2);
+    cursor:pointer;
   }
+  .srow.on{background:#fff}
+  .srow:focus-visible{outline:2px solid var(--green-deep); outline-offset:3px}
   .srow .code{color:var(--green-deep); font-weight:600; font-size:.86rem; letter-spacing:.08em}
   .srow .desc{color:var(--ink-soft); font-weight:300; font-size:.9rem; line-height:1.7}
   .srow .desc .zh{color:var(--ink); font-weight:400; display:block; margin-bottom:2px}
@@ -286,6 +326,16 @@
   .grp .topic{font-weight:500; font-size:1.02rem; letter-spacing:.02em; flex:1 1 14rem; line-height:1.45}
   .grp .topic .sub{display:block; font-size:.78rem; font-weight:300; color:var(--ink-soft); margin-top:2px}
   .grp .mvcb{font-size:.78rem; color:var(--ink-soft); font-weight:300; flex:none}
+  /* 跳轉標記：直接到影片／簡報。用 <a> 而非 <button>，避免 summary 內互動元素巢狀 */
+  .jump{display:flex; gap:8px; flex:none}
+  .jb{
+    font-size:.72rem; letter-spacing:.06em; color:var(--green-deep);
+    text-decoration:none; padding:5px 12px; border-radius:14px;
+    background:rgba(255,255,255,.62); font-weight:500; white-space:nowrap;
+  }
+  .jb:hover{background:#fff}
+  .jb:focus-visible{outline:2px solid var(--green-deep); outline-offset:2px}
+
   .grp .arw{
     flex:none; width:38px; height:38px; border-radius:50%;
     background:var(--green-deep); color:#fff; display:grid; place-items:center;
@@ -375,6 +425,7 @@
     /* 膠囊 bar 換行後高度大增，999px 圓角會變成 83–105px 巨弧壓迫文字；
        手機改用固定大圓角，弧線不再侵入文字區 */
     .grp summary{border-radius:28px; padding:24px 26px}
+    .jump{order:3; margin-top:4px}
   }
 
   footer{
@@ -387,9 +438,22 @@
   /* 動畫：靜態是預設值，只在允許動態時加上去 */
   .reveal{opacity:1}
   @media (prefers-reduced-motion: no-preference){
-    .day summary{transition:background-color .3s ease, transform .3s cubic-bezier(.22,1,.36,1)}
-    .day summary::before{transition:box-shadow .45s cubic-bezier(.22,1,.36,1), background-color .45s ease}
-    .day summary:hover{transform:translateX(3px)}
+    .day summary{transition:background-color .3s ease, transform .3s cubic-bezier(.22,1,.36,1), box-shadow .35s ease}
+    .day summary::before{transition:box-shadow .45s cubic-bezier(.22,1,.36,1), background-color .45s ease, transform .45s cubic-bezier(.22,1,.36,1)}
+    .day summary::after{transition:opacity .35s ease}
+    .day summary:hover{
+      transform:translateX(6px);
+      box-shadow:0 12px 26px -14px rgba(8,99,58,.28);
+    }
+    .day summary:hover::before{           /* 節點放大 + 光環擴散 */
+      transform:scale(1.25);
+      box-shadow:0 0 0 2px var(--green), 0 0 0 12px rgba(15,157,88,.16);
+    }
+    .site summary,.site .arw{transition:background-color .3s ease, transform .35s cubic-bezier(.22,1,.36,1)}
+    .site summary:hover .arw{transform:translateX(4px)}
+    .site[open] summary:hover .arw{transform:rotate(90deg)}
+    .zone{transition:fill .25s ease, stroke .25s ease}
+    .srow{transition:background-color .25s ease}
     .grp summary{transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, background-color .3s ease}
     .grp summary::before{transition:opacity .35s ease}
     .grp summary:hover{
@@ -439,9 +503,12 @@
     .site summary{padding:20px 22px}
     .site .body{padding:22px 22px 26px}
     .site .hint{display:none}
-    .eras{grid-template-columns:1fr; border-top:none}
-    .era{padding:14px 0 12px; border-left:none; border-top:1px solid var(--green-mist)}
-    .era:first-child{border-top:none; padding-top:0}
+    .eras{grid-template-columns:1fr; padding:0 0 0 26px}
+    .eras::before{top:8px; bottom:14px; left:5px; right:auto; width:2px; height:auto;
+      background:linear-gradient(180deg, rgba(15,157,88,.5), rgba(15,157,88,.28))}
+    .era{padding:0 0 18px}
+    .era:last-child{padding-bottom:0}
+    .era::before{top:6px; left:-26px; transform:none}
     .sites{grid-template-columns:1fr; gap:2px}
     .srow{grid-template-columns:1fr; gap:5px; padding-left:14px}
   }
@@ -485,8 +552,9 @@
     <details class="site reveal">
       <summary>
         <span class="tag en">SITE</span>
-        <span class="ttl">南鐵綠廊北段・四個基地</span>
-        <span class="hint">點開看基地說明</span>
+        <span class="ttl">南鐵綠廊北段・四個基地<span class="sub">A 站前廣場・B 通學廊道・C 綠廊中段・D 綠廊北段</span></span>
+        <span class="hint">城牆 → 園道 → 綠廊</span>
+        <span class="arw" aria-hidden="true">→</span>
       </summary>
       <div class="body">
         <p class="lede">
@@ -516,6 +584,12 @@
             <img src="assets/site/s-map.jpg"
                  alt="台南綠園道基地區位圖，沿鐵路廊帶由南至北標示 Site A、Site B、Site C、Site D 四個基地範圍"
                  loading="lazy" width="1467" height="825">
+            <svg class="zones" viewBox="0 0 1467 825" aria-hidden="true" focusable="false">
+              <ellipse class="zone" data-site="A" cx="610" cy="720" rx="180" ry="140"/>
+              <ellipse class="zone" data-site="B" cx="770" cy="600" rx="285" ry="90"/>
+              <ellipse class="zone" data-site="C" cx="700" cy="425" rx="205" ry="165"/>
+              <ellipse class="zone" data-site="D" cx="775" cy="175" rx="190" ry="160"/>
+            </svg>
           </span>
           <span class="cap">四個基地沿綠廊由南至北分布，各組再細分為 A1、A2、B1、B2 等範圍。
             <span class="src">資料來源：仲觀聯合建築師事務所</span>
@@ -523,28 +597,28 @@
         </figure>
 
         <div class="sites">
-          <div class="srow">
+          <div class="srow" data-site="A" tabindex="0">
             <span class="code en">Site A</span>
             <span class="desc">
               <span class="zh">台南火車站站前廣場</span>
               站前廣場改造工程，預計 2027 年底完工。
             </span>
           </div>
-          <div class="srow">
+          <div class="srow" data-site="B" tabindex="0">
             <span class="code en">Site B</span>
             <span class="desc">
               <span class="zh">小東路—民族路通學友善廊道</span>
               涵蓋遺構公園與小東社宅一帶。
             </span>
           </div>
-          <div class="srow">
+          <div class="srow" data-site="C" tabindex="0">
             <span class="code en">Site C</span>
             <span class="desc">
               <span class="zh">綠廊中段</span>
               香菉公園、開元國小、中樓里一帶。
             </span>
           </div>
-          <div class="srow">
+          <div class="srow" data-site="D" tabindex="0">
             <span class="code en">Site D</span>
             <span class="desc">
               <span class="zh">綠廊北段</span>
@@ -597,7 +671,7 @@
       <details class="day reveal">
         <summary><span class="tag en">DAY 3</span><span class="ttl">田野調查・基地踏查</span><span class="when en">8/3 MON</span></summary>
         <div class="body">
-          田野與使用者研究方法，長生里里長分享與對談，下午前往南鐵綠廊北段實地踏查。
+          田野與使用者研究方法，長勝里吳里長分享與對談，下午前往南鐵綠廊北段實地踏查。
           <div class="who-line">講者　<span class="who">Chung-Ching Huang・Li-Wen Sung・Chi-Pang Lu</span></div>
           <div class="shots" data-day="d3"><img class="shot" src="assets/photos/d3-01.jpg" alt="Day 3 里長對談與基地踏查" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d3-02.jpg" alt="Day 3 里長對談與基地踏查" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d3-03.jpg" alt="Day 3 里長對談與基地踏查" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d3-04.jpg" alt="Day 3 里長對談與基地踏查" loading="lazy" width="1400" height="933"></div>
         </div>
@@ -775,15 +849,16 @@
           <span class="g en">GROUP 1</span>
           <span class="topic">The Green Living Age Society<span class="sub">Preserving Ecosystem Balance for the Future</span></span>
           <span class="mvcb">Site C1　·　Prof. Lu</span>
+          <span class="jump"><a class="jb" href="#g1-video" aria-label="Group 1 影片">影片</a><a class="jb" href="#g1-deck" aria-label="Group 1 簡報">簡報</a></span>
           <span class="arw" aria-hidden="true">→</span>
         </summary>
         <div class="grp-body">
-          <video class="vid" controls preload="none" poster="assets/video/g1-poster.jpg"
+          <video id="g1-video" class="vid" controls preload="none" poster="assets/video/g1-poster.jpg"
                  width="1280" height="720">
             <source src="assets/video/g1.mp4" type="video/mp4">
             您的瀏覽器不支援影片播放，請<a href="assets/video/g1.mp4">下載影片</a>。
           </video>
-          <div class="deck">
+          <div class="deck" id="g1-deck">
             <div class="stage">
               <img class="pg" src="assets/slides/g1/p-01.jpg" alt="Group 1 簡報第 1 頁" width="1440" height="810">
               <button class="nav prev" aria-label="上一頁">‹</button>
@@ -800,15 +875,16 @@
           <span class="g en">GROUP 2</span>
           <span class="topic">Sound of Cultures</span>
           <span class="mvcb">Site A2　·　Prof. Nawit</span>
+          <span class="jump"><a class="jb" href="#g2-video" aria-label="Group 2 影片">影片</a><a class="jb" href="#g2-deck" aria-label="Group 2 簡報">簡報</a></span>
           <span class="arw" aria-hidden="true">→</span>
         </summary>
         <div class="grp-body">
-          <video class="vid" controls preload="none" poster="assets/video/g2-poster.jpg"
+          <video id="g2-video" class="vid" controls preload="none" poster="assets/video/g2-poster.jpg"
                  width="1280" height="720">
             <source src="assets/video/g2.mp4" type="video/mp4">
             您的瀏覽器不支援影片播放，請<a href="assets/video/g2.mp4">下載影片</a>。
           </video>
-          <div class="deck">
+          <div class="deck" id="g2-deck">
             <div class="stage">
               <img class="pg" src="assets/slides/g2/p-01.jpg" alt="Group 2 簡報第 1 頁" width="1440" height="810">
               <button class="nav prev" aria-label="上一頁">‹</button>
@@ -825,15 +901,16 @@
           <span class="g en">GROUP 3</span>
           <span class="topic">Tainan Green Civic Living Room<span class="sub">Smart Mobility Urban Corridor</span></span>
           <span class="mvcb">Site A1　·　Prof. Apichoke</span>
+          <span class="jump"><a class="jb" href="#g3-video" aria-label="Group 3 影片">影片</a><a class="jb" href="#g3-deck" aria-label="Group 3 簡報">簡報</a></span>
           <span class="arw" aria-hidden="true">→</span>
         </summary>
         <div class="grp-body">
-          <video class="vid" controls preload="none" poster="assets/video/g3-poster.jpg"
+          <video id="g3-video" class="vid" controls preload="none" poster="assets/video/g3-poster.jpg"
                  width="1280" height="720">
             <source src="assets/video/g3.mp4" type="video/mp4">
             您的瀏覽器不支援影片播放，請<a href="assets/video/g3.mp4">下載影片</a>。
           </video>
-          <div class="deck">
+          <div class="deck" id="g3-deck">
             <div class="stage">
               <img class="pg" src="assets/slides/g3/p-01.jpg" alt="Group 3 簡報第 1 頁" width="1440" height="810">
               <button class="nav prev" aria-label="上一頁">‹</button>
@@ -850,15 +927,16 @@
           <span class="g en">GROUP 4</span>
           <span class="topic">Green Living for the Super-Aged Society<span class="sub">串聯通學安全與多元公共空間</span></span>
           <span class="mvcb">Site D2　·　Eric（周黃冠穎）</span>
+          <span class="jump"><a class="jb" href="#g4-video" aria-label="Group 4 影片">影片</a><a class="jb" href="#g4-deck" aria-label="Group 4 簡報">簡報</a></span>
           <span class="arw" aria-hidden="true">→</span>
         </summary>
         <div class="grp-body">
-          <video class="vid" controls preload="none" poster="assets/video/g4-poster.jpg"
+          <video id="g4-video" class="vid" controls preload="none" poster="assets/video/g4-poster.jpg"
                  width="1280" height="720">
             <source src="assets/video/g4.mp4" type="video/mp4">
             您的瀏覽器不支援影片播放，請<a href="assets/video/g4.mp4">下載影片</a>。
           </video>
-          <div class="deck">
+          <div class="deck" id="g4-deck">
             <div class="stage">
               <img class="pg" src="assets/slides/g4/p-01.jpg" alt="Group 4 簡報第 1 頁" width="1440" height="810">
               <button class="nav prev" aria-label="上一頁">‹</button>
@@ -875,15 +953,16 @@
           <span class="g en">GROUP 5</span>
           <span class="topic">Tunnel, Connection of Life</span>
           <span class="mvcb">Site B2　·　Chen（陳侃如）</span>
+          <span class="jump"><a class="jb" href="#g5-video" aria-label="Group 5 影片">影片</a><a class="jb" href="#g5-deck" aria-label="Group 5 簡報">簡報</a></span>
           <span class="arw" aria-hidden="true">→</span>
         </summary>
         <div class="grp-body">
-          <video class="vid" controls preload="none" poster="assets/video/g5-poster.jpg"
+          <video id="g5-video" class="vid" controls preload="none" poster="assets/video/g5-poster.jpg"
                  width="1280" height="720">
             <source src="assets/video/g5.mp4" type="video/mp4">
             您的瀏覽器不支援影片播放，請<a href="assets/video/g5.mp4">下載影片</a>。
           </video>
-          <div class="deck">
+          <div class="deck" id="g5-deck">
             <div class="stage">
               <img class="pg" src="assets/slides/g5/p-01.jpg" alt="Group 5 簡報第 1 頁" width="1440" height="810">
               <button class="nav prev" aria-label="上一頁">‹</button>
@@ -900,15 +979,16 @@
           <span class="g en">GROUP 6</span>
           <span class="topic">Tainan Green Way</span>
           <span class="mvcb">Site B1　·　Prof. Sung</span>
+          <span class="jump"><a class="jb" href="#g6-video" aria-label="Group 6 影片">影片</a><a class="jb" href="#g6-deck" aria-label="Group 6 簡報">簡報</a></span>
           <span class="arw" aria-hidden="true">→</span>
         </summary>
         <div class="grp-body">
-          <video class="vid" controls preload="none" poster="assets/video/g6-poster.jpg"
+          <video id="g6-video" class="vid" controls preload="none" poster="assets/video/g6-poster.jpg"
                  width="1280" height="720">
             <source src="assets/video/g6.mp4" type="video/mp4">
             您的瀏覽器不支援影片播放，請<a href="assets/video/g6.mp4">下載影片</a>。
           </video>
-          <div class="deck">
+          <div class="deck" id="g6-deck">
             <div class="stage">
               <img class="pg" src="assets/slides/g6/p-01.jpg" alt="Group 6 簡報第 1 頁" width="1440" height="810">
               <button class="nav prev" aria-label="上一頁">‹</button>
@@ -925,15 +1005,16 @@
           <span class="g en">GROUP 7</span>
           <span class="topic">Building Connections Across Generations<span class="sub">Through Safe and Friendly Greenway</span></span>
           <span class="mvcb">Site D1　·　Cheng（鄭庭婷）</span>
+          <span class="jump"><a class="jb" href="#g7-video" aria-label="Group 7 影片">影片</a><a class="jb" href="#g7-deck" aria-label="Group 7 簡報">簡報</a></span>
           <span class="arw" aria-hidden="true">→</span>
         </summary>
         <div class="grp-body">
-          <video class="vid" controls preload="none" poster="assets/video/g7-poster.jpg"
+          <video id="g7-video" class="vid" controls preload="none" poster="assets/video/g7-poster.jpg"
                  width="1280" height="720">
             <source src="assets/video/g7.mp4" type="video/mp4">
             您的瀏覽器不支援影片播放，請<a href="assets/video/g7.mp4">下載影片</a>。
           </video>
-          <div class="deck">
+          <div class="deck" id="g7-deck">
             <div class="stage">
               <img class="pg" src="assets/slides/g7/p-01.jpg" alt="Group 7 簡報第 1 頁" width="1440" height="810">
               <button class="nav prev" aria-label="上一頁">‹</button>
@@ -1160,5 +1241,57 @@ document.querySelectorAll('.grp').forEach(grp => {
     if (!grp.open) { const v = grp.querySelector('video'); if (v && !v.paused) v.pause(); }
   });
   show(1);
+});
+
+// bar 上的光暈跟隨滑鼠。--mx/--my 原本只有 CSS 的 50% 退路，沒有人寫入
+// 用 pointermove 直接改 CSS 變數，不觸發 layout（只重繪 background）
+if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+  document.querySelectorAll('.day summary, .grp summary').forEach(el => {
+    el.addEventListener('pointermove', e => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', ((e.clientX - r.left) / r.width  * 100).toFixed(1) + '%');
+      el.style.setProperty('--my', ((e.clientY - r.top ) / r.height * 100).toFixed(1) + '%');
+    });
+  });
+}
+
+// 基地圖：Site 列 ↔ 地圖橢圓雙向連動
+// 桌機用 hover，觸控裝置沒有 hover 所以也吃 click（點了會維持高亮）
+(() => {
+  const zones = [...document.querySelectorAll('.zone')];
+  const rows  = [...document.querySelectorAll('.srow[data-site]')];
+  if (!zones.length) return;
+  const set = (code, on) => {
+    zones.forEach(z => z.classList.toggle('on', on && z.dataset.site === code));
+    rows .forEach(r => r.classList.toggle('on', on && r.dataset.site === code));
+  };
+  const bind = el => {
+    const c = el.dataset.site;
+    el.addEventListener('mouseenter', () => set(c, true));
+    el.addEventListener('mouseleave', () => set(c, false));
+    el.addEventListener('focus',      () => set(c, true));
+    el.addEventListener('blur',       () => set(c, false));
+    el.addEventListener('click', e => {
+      e.stopPropagation();               // 不要收合外層的 details
+      const already = el.classList.contains('on');
+      set(c, !already);
+    });
+  };
+  zones.forEach(bind);
+  rows.forEach(bind);
+})();
+
+// 各組 bar 上的「影片／簡報」標記：展開該組並捲到對應內容
+// 無 JS 時錨點本身仍可跳（瀏覽器會自動展開 details）
+document.querySelectorAll('.jb').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (!target) return;
+    e.preventDefault();
+    e.stopPropagation();                 // 不要順帶觸發 summary 的展開／收合
+    const grp = a.closest('details');
+    if (grp) grp.open = true;
+    target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  });
 });
 </script>
