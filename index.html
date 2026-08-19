@@ -302,6 +302,11 @@
     .fitem{grid-template-columns:1fr; gap:10px}
     .fitem.brk{grid-template-columns:1fr}
     .fpic{width:100%; height:150px}
+    /* 議程卡間距加寬（8px → 32px）*/
+    .agenda{gap:32px}
+    /* 膠囊 bar 換行後高度大增，999px 圓角會變成 83–105px 巨弧壓迫文字；
+       手機改用固定大圓角，弧線不再侵入文字區 */
+    .grp summary{border-radius:28px; padding:24px 26px}
   }
 
   footer{
