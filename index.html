@@ -169,42 +169,72 @@
     font-size:.66rem; color:var(--ink-soft); letter-spacing:.13em; background:#fff;
   }
 
-  /* ── 基地與選址 ── */
-  .site .lede{max-width:none}
-  /* 三時代：同一條廊帶被重寫三次。用底線分隔的文字列，不做描邊卡片 */
-  .eras{display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin:0 0 34px}
-  .era{padding:18px 22px 16px; border-top:2px solid var(--green-mist-2)}
+  /* ── 基地與選址：可收折 bar，沿用 .day 的語彙但無時間軸節點 ── */
+  .site{margin-bottom:14px}
+  .site summary{
+    position:relative; list-style:none; cursor:pointer;
+    padding:22px 26px; border-radius:20px; background:var(--green-mist);
+    display:flex; gap:20px; align-items:baseline; flex-wrap:wrap;
+  }
+  .site summary::-webkit-details-marker{display:none}
+  .site summary:hover{background:var(--green-mist-2)}
+  .site summary:focus-visible{outline:2px solid var(--green-deep); outline-offset:4px}
+  .site[open] summary{background:var(--green-mist-2); border-radius:20px 20px 0 0}
+  .site .tag{
+    font-size:.69rem; color:var(--green-deep); letter-spacing:.19em;
+    white-space:nowrap; flex:none; font-weight:600;
+  }
+  .site .ttl{font-weight:600; font-size:1.06rem; letter-spacing:.02em; color:var(--ink)}
+  .site .hint{
+    font-size:.73rem; color:var(--ink-soft); margin-left:auto;
+    letter-spacing:.1em; flex:none;
+  }
+  .site[open] .hint{opacity:0}
+  .site .body{
+    background:var(--green-mist); border-radius:0 0 20px 20px;
+    padding:26px 30px 30px; color:var(--ink-soft); font-size:.94rem; font-weight:300;
+  }
+  .site .body .lede{max-width:none; margin-bottom:24px; font-size:.97rem}
+
+  /* 三時代：橫向並列，以直線分隔 */
+  .eras{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:0;
+    margin:0 0 28px; border-top:1px solid var(--green-mist);
+  }
+  .era{padding:16px 20px 14px; border-left:1px solid var(--green-mist)}
+  .era:first-child{border-left:none; padding-left:0}
   .era .yr{
-    display:block; font-size:.67rem; font-weight:500; color:var(--green-deep);
-    letter-spacing:.2em; margin-bottom:7px;
+    display:block; font-size:.65rem; font-weight:600; color:var(--green-deep);
+    letter-spacing:.19em; margin-bottom:6px;
   }
   .era .what{color:var(--ink); font-weight:500; font-size:1rem}
-  .era .what .en{display:block; font-size:.78rem; color:var(--ink-soft); font-weight:300; margin-top:3px; letter-spacing:0}
-
-  /* 基地圖：完整顯示（contain 而非 cover），這些是資訊圖不是氛圍照 */
-  .figs{display:grid; grid-template-columns:3fr 2fr; gap:16px; margin:0 0 34px}
-  .fig{margin:0}
-  .fig img{
-    display:block; width:100%; height:auto; border-radius:16px;
-    background:#fff; border:1px solid var(--green-mist-2);
+  .era .what .en{
+    display:block; font-size:.75rem; color:var(--ink-soft);
+    font-weight:300; margin-top:3px; letter-spacing:0;
   }
+
+  /* 基地圖：單張放大，資訊圖需完整可讀 */
+  .fig{margin:0 0 30px}
+  /* 圖在淡綠底上，淺邊框幾乎看不見；用白色襯底讓資訊圖與底色分離 */
+  .fig .mount{
+    display:block; background:#fff; padding:12px; border-radius:16px;
+    box-shadow:0 1px 3px rgba(28,42,35,.06);
+  }
+  .fig img{display:block; width:100%; height:auto; border-radius:8px; background:#fff}
   .fig .cap{
-    display:block; margin-top:9px; font-size:.76rem; line-height:1.65;
+    display:block; margin-top:12px; font-size:.78rem; line-height:1.7;
     color:var(--ink-soft); font-weight:300;
   }
-  .fig .cap .src{display:block; font-size:.7rem; opacity:.85; margin-top:2px}
-  .figs .fig:first-child{grid-row:span 2}
-  .figs .fig:first-child img{aspect-ratio:auto}
+  .fig .cap .src{display:block; font-size:.71rem; margin-top:2px}
 
-  /* 四個基地：單邊色帶分隔的文字列 */
-  .sites{margin:0}
+  /* 四個基地：兩欄，單邊色帶 */
+  .sites{display:grid; grid-template-columns:repeat(2,1fr); gap:2px 26px}
   .srow{
-    display:grid; grid-template-columns:88px 1fr; gap:20px; align-items:baseline;
-    padding:16px 0 16px 20px; border-left:3px solid var(--green-mist-2);
+    display:grid; grid-template-columns:66px 1fr; gap:16px; align-items:baseline;
+    padding:14px 0 14px 16px; border-left:3px solid var(--green-mist-2);
   }
-  .srow + .srow{border-top:1px solid var(--green-mist)}
-  .srow .code{color:var(--green-deep); font-weight:600; font-size:.9rem; letter-spacing:.08em}
-  .srow .desc{color:var(--ink-soft); font-weight:300; font-size:.94rem; line-height:1.75}
+  .srow .code{color:var(--green-deep); font-weight:600; font-size:.86rem; letter-spacing:.08em}
+  .srow .desc{color:var(--ink-soft); font-weight:300; font-size:.9rem; line-height:1.7}
   .srow .desc .zh{color:var(--ink); font-weight:400; display:block; margin-bottom:2px}
 
 
@@ -406,12 +436,14 @@
     .day .when{margin-left:0; width:100%}
     .about,.forum{padding:30px 24px; border-radius:22px}
     .day summary,.day .body{padding-left:20px; padding-right:20px}
-    .eras{grid-template-columns:1fr; gap:0}
-    .era{padding:16px 0 14px}
-    .era:first-child{border-top:none}
-    .figs{grid-template-columns:1fr}
-    .figs .fig:first-child{grid-row:auto}
-    .srow{grid-template-columns:1fr; gap:6px; padding-left:16px}
+    .site summary{padding:20px 22px}
+    .site .body{padding:22px 22px 26px}
+    .site .hint{display:none}
+    .eras{grid-template-columns:1fr; border-top:none}
+    .era{padding:14px 0 12px; border-left:none; border-top:1px solid var(--green-mist)}
+    .era:first-child{border-top:none; padding-top:0}
+    .sites{grid-template-columns:1fr; gap:2px}
+    .srow{grid-template-columns:1fr; gap:5px; padding-left:14px}
   }
 </style>
 </head>
@@ -450,100 +482,83 @@
 
   <section>
     <h3 class="sec"><span class="lbl en">SITE</span>基地與選址</h3>
-    <div class="site reveal">
-      <p class="lede">
-        工作坊的基地是<strong>台南鐵路地下化後的南鐵綠廊北段</strong>。
-        選擇這裡，是因為這條廊帶並非新生的空地——它在台南的城市史上已被重寫過三次。
-      </p>
+    <details class="site reveal">
+      <summary>
+        <span class="tag en">SITE</span>
+        <span class="ttl">南鐵綠廊北段・四個基地</span>
+        <span class="hint">點開看基地說明</span>
+      </summary>
+      <div class="body">
+        <p class="lede">
+          工作坊的基地是<strong>台南鐵路地下化後的南鐵綠廊北段</strong>。
+          選擇這裡，是因為這條廊帶並非新生的空地——同一條線先後是城牆、園道、鐵道，
+          如今隨鐵路地下化再次空出來。工作坊要問的是：當台南邁入超高齡社會，
+          這條被反覆重寫的廊帶，這一次應該為誰而寫。
+        </p>
 
-      <div class="eras">
-        <div class="era">
-          <span class="yr en">CHING DYNASTY</span>
-          <span class="what">城牆<span class="en">City wall</span></span>
+        <div class="eras">
+          <div class="era">
+            <span class="yr en">CHING DYNASTY</span>
+            <span class="what">城牆<span class="en">City wall</span></span>
+          </div>
+          <div class="era">
+            <span class="yr en">JAPANESE PERIOD</span>
+            <span class="what">園道<span class="en">Parkway</span></span>
+          </div>
+          <div class="era">
+            <span class="yr en">TODAY</span>
+            <span class="what">鐵路地下化綠廊<span class="en">Railway greenway</span></span>
+          </div>
         </div>
-        <div class="era">
-          <span class="yr en">JAPANESE PERIOD</span>
-          <span class="what">園道<span class="en">Parkway</span></span>
-        </div>
-        <div class="era">
-          <span class="yr en">TODAY</span>
-          <span class="what">鐵路地下化綠廊<span class="en">Parkway after railway undergrounding</span></span>
-        </div>
-      </div>
 
-      <p class="lede">
-        同一條線，先後是城牆、園道、鐵道，如今隨鐵路地下化再次空出來。
-        工作坊要問的是：當台南邁入超高齡社會，這條被反覆重寫的廊帶，這一次應該為誰而寫。
-      </p>
-      <p class="lede sub">
-        The same corridor has been rewritten three times — city wall, parkway, railway.
-        With the railway now underground, the workshop asks who this space should serve
-        as Tainan enters a super-aged society.
-      </p>
-
-      <div class="figs">
         <figure class="fig">
-          <img src="assets/site/s-map.jpg"
-               alt="台南綠園道基地區位圖，沿鐵路廊帶由南至北標示 Site A、Site B、Site C、Site D 四個基地範圍"
-               loading="lazy" width="1467" height="825">
+          <span class="mount">
+            <img src="assets/site/s-map.jpg"
+                 alt="台南綠園道基地區位圖，沿鐵路廊帶由南至北標示 Site A、Site B、Site C、Site D 四個基地範圍"
+                 loading="lazy" width="1467" height="825">
+          </span>
           <span class="cap">四個基地沿綠廊由南至北分布，各組再細分為 A1、A2、B1、B2 等範圍。
             <span class="src">資料來源：仲觀聯合建築師事務所</span>
           </span>
         </figure>
-        <figure class="fig">
-          <img src="assets/site/s-history.jpg"
-               alt="台南市區鳥瞰疊圖，標示清代城牆、日治時期園道與鐵路地下化後綠廊三個時期的空間位置關係"
-               loading="lazy" width="1467" height="825">
-          <span class="cap">三個時期疊在同一條廊帶上。
-            <span class="src">資料來源：仲觀聯合建築師事務所</span>
-          </span>
-        </figure>
-        <figure class="fig">
-          <img src="assets/site/s-vision.jpg"
-               alt="綠廊完工後的模擬示意圖，長者在林蔭步道上散步"
-               loading="lazy" width="1467" height="825">
-          <span class="cap">綠廊願景模擬圖。
-            <span class="src">資料來源：仲觀聯合建築師事務所</span>
-          </span>
-        </figure>
-      </div>
 
-      <div class="sites">
-        <div class="srow">
-          <span class="code en">Site A</span>
-          <span class="desc">
-            <span class="zh">台南火車站站前廣場</span>
-            站前廣場改造工程，預計 2027 年底完工。Tainan Station forecourt.
-          </span>
+        <div class="sites">
+          <div class="srow">
+            <span class="code en">Site A</span>
+            <span class="desc">
+              <span class="zh">台南火車站站前廣場</span>
+              站前廣場改造工程，預計 2027 年底完工。
+            </span>
+          </div>
+          <div class="srow">
+            <span class="code en">Site B</span>
+            <span class="desc">
+              <span class="zh">小東路—民族路通學友善廊道</span>
+              涵蓋遺構公園與小東社宅一帶。
+            </span>
+          </div>
+          <div class="srow">
+            <span class="code en">Site C</span>
+            <span class="desc">
+              <span class="zh">綠廊中段</span>
+              香菉公園、開元國小、中樓里一帶。
+            </span>
+          </div>
+          <div class="srow">
+            <span class="code en">Site D</span>
+            <span class="desc">
+              <span class="zh">綠廊北段</span>
+              長榮路、大光國小、長榮公園一帶。
+            </span>
+          </div>
         </div>
-        <div class="srow">
-          <span class="code en">Site B</span>
-          <span class="desc">
-            <span class="zh">小東路—民族路通學友善廊道</span>
-            涵蓋遺構公園與小東社宅一帶。Walkable school corridor, heritage park and social housing.
-          </span>
-        </div>
-        <div class="srow">
-          <span class="code en">Site C</span>
-          <span class="desc">
-            <span class="zh">綠廊中段</span>
-            香菉公園、開元國小、中樓里一帶。
-          </span>
-        </div>
-        <div class="srow">
-          <span class="code en">Site D</span>
-          <span class="desc">
-            <span class="zh">綠廊北段</span>
-            長榮路、大光國小、長榮公園一帶。
-          </span>
-        </div>
-      </div>
 
-      <p class="lede" style="margin-top:30px">
-        各組在基地上觀察四件事——<strong>綠色環境、綠色移動、綠色生活與綠色商業活動</strong>，
-        並以移工、長者、學生與觀光客為主要對象，作為設計提案的起點。
-      </p>
-    </div>
+        <p class="lede" style="margin:26px 0 0">
+          各組在基地上觀察四件事——<strong>綠色環境、綠色移動、綠色生活與綠色商業活動</strong>，
+          並以移工、長者、學生與觀光客為主要對象，作為設計提案的起點。
+        </p>
+      </div>
+    </details>
   </section>
 
   <section>
