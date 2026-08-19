@@ -259,6 +259,38 @@
   }
   .forum p{margin:0; color:var(--ink-soft); font-size:.96rem; font-weight:300}
 
+
+  /* ── 論壇議程 ── */
+  .fhead{margin:0 0 4px; font-size:1.3rem; font-weight:700; letter-spacing:.01em}
+  .fsubhead{margin:0 0 16px; font-size:.82rem; color:var(--green-deep); letter-spacing:.14em; font-weight:500}
+  .flede{margin:0 0 26px; color:var(--ink-soft); font-weight:300; font-size:.95rem; max-width:56ch}
+  .agenda{display:flex; flex-direction:column; gap:2px; margin-bottom:26px}
+  .fitem{
+    display:grid; grid-template-columns:96px 1fr 120px; gap:18px; align-items:center;
+    padding:14px 16px; background:var(--bg); border-radius:14px;
+  }
+  .fitem.op{background:var(--green-mist-2)}
+  .fitem.brk{
+    grid-template-columns:96px 1fr; padding:8px 16px; background:none;
+    color:var(--ink-soft); font-size:.85rem; font-weight:300;
+  }
+  .ftime{font-size:.72rem; color:var(--green-deep); letter-spacing:.06em; font-weight:600;
+         font-variant-numeric:tabular-nums; white-space:nowrap}
+  .fmain{min-width:0}
+  .ftitle{display:block; font-weight:500; font-size:.95rem; line-height:1.5; letter-spacing:.01em}
+  .fsub{display:block; font-size:.79rem; font-weight:300; color:var(--ink-soft); margin-top:2px; letter-spacing:.02em}
+  .fwho{display:block; margin-top:6px; font-size:.83rem; font-weight:600; color:var(--green-deep)}
+  .faff{display:block; font-size:.73rem; font-weight:300; color:var(--ink-soft); margin-top:1px; letter-spacing:.01em}
+  .proxy{color:var(--pend-ink)}
+  .fpic{width:120px; height:80px; object-fit:cover; object-position:center 38%; border-radius:10px; display:block}
+  .fgal{margin-top:0}
+
+  @media(max-width:640px){
+    .fitem{grid-template-columns:1fr; gap:10px}
+    .fitem.brk{grid-template-columns:1fr}
+    .fpic{width:100%; height:150px}
+  }
+
   footer{
     margin-top:11vh; padding:36px 0 60px; color:var(--ink-soft);
     font-size:.78rem; font-weight:300; line-height:2; letter-spacing:.04em;
@@ -742,8 +774,94 @@
     <div class="forum reveal">
       <div class="fglow"></div>
       <div class="fin">
-        <p class="when en">2026.08.07　ROOM 5101</p>
-        <p>各參與國教師與學員齊聚，分享工作坊成果並展望後續合作。</p>
+        <p class="when en">2026.08.07　09:00–12:30　ROOM 5101</p>
+        <h4 class="fhead">Green Living Across Contexts</h4>
+        <p class="fsubhead en">Local Practices・Global Dialogues</p>
+        <p class="flede">來自日本、印尼、泰國與台灣的七位學者分享各國經驗，最後以綜合討論收尾。</p>
+        <div class="agenda">
+        <div class="fitem op">
+          <span class="ftime en">09:00–09:20</span>
+          <div class="fmain">
+            <span class="ftitle">開幕・來賓致詞<span class="fsub en">Opening / Guest Remarks</span></span>
+            
+          </div>
+          <img class="fpic" src="assets/forum/guest-1.jpg" alt="開幕・來賓致詞於論壇發表" loading="lazy" width="1400" height="933">
+        </div>
+        <div class="fitem">
+          <span class="ftime en">09:20–09:40</span>
+          <div class="fmain">
+            <span class="ftitle">Edible Plantings in Streetscapes as Social Infrastructure for Community Building</span>
+            <span class="fwho">Masayuki Suzuki<span class="faff">千葉大學 Graduate School of Global and Transdisciplinary Studies｜Japan</span></span>
+          </div>
+          <img class="fpic" src="assets/forum/s1.jpg" alt="Masayuki Suzuki於論壇發表" loading="lazy" width="1400" height="933">
+        </div>
+        <div class="fitem">
+          <span class="ftime en">09:40–10:00</span>
+          <div class="fmain">
+            <span class="ftitle">Co-Creation and Participatory Design through Appropriate Technology<span class="fsub en">Community Engagement Programs in FTUI</span></span>
+            <span class="fwho">Kemas Ridwan Kurniawan<span class="faff">印尼大學建築系／工學院院長｜Indonesia</span></span>
+          </div>
+          <img class="fpic" src="assets/forum/s2.jpg" alt="Kemas Ridwan Kurniawan於論壇發表" loading="lazy" width="1400" height="933">
+        </div>
+        <div class="fitem">
+          <span class="ftime en">10:00–10:20</span>
+          <div class="fmain">
+            <span class="ftitle">Green Living Beyond Green Spaces<span class="fsub en">How Community Learning Creates Age-Friendly and Sustainable Cities</span></span>
+            <span class="fwho">Pronyos Chattarakul<span class="faff">KMUTT Center of Innovation for Society｜Thailand<br><span class="proxy">代為發表：Arunothai Sarigakham</span></span></span>
+          </div>
+          <img class="fpic" src="assets/forum/s3.jpg" alt="Pronyos Chattarakul於論壇發表" loading="lazy" width="1400" height="933">
+        </div>
+        <div class="fitem brk">
+          <span class="ftime en">10:20–10:40</span>
+          <span class="ftitle">休息<span class="fsub en">Break</span></span>
+        </div>
+        <div class="fitem">
+          <span class="ftime en">10:40–11:00</span>
+          <div class="fmain">
+            <span class="ftitle">Green Space Development in Lamphun Municipality</span>
+            <span class="fwho">Apichoke Lekagul<span class="faff">清邁大學建築學院｜Thailand</span></span>
+          </div>
+          <img class="fpic" src="assets/forum/s4.jpg" alt="Apichoke Lekagul於論壇發表" loading="lazy" width="1400" height="933">
+        </div>
+        <div class="fitem">
+          <span class="ftime en">11:00–11:20</span>
+          <div class="fmain">
+            <span class="ftitle">Reconnecting the Aging City<span class="fsub en">Temple Networks for Walkable and Inclusive Living in Chiang Mai Old Town</span></span>
+            <span class="fwho">Nawit Ongsavangchai<span class="faff">清邁大學建築學院｜Thailand</span></span>
+          </div>
+          <img class="fpic" src="assets/forum/s5.jpg" alt="Nawit Ongsavangchai於論壇發表" loading="lazy" width="1400" height="933">
+        </div>
+        <div class="fitem">
+          <span class="ftime en">11:20–11:40</span>
+          <div class="fmain">
+            <span class="ftitle">Collaborative Design with Visually Impaired Individuals<span class="fsub en">Community-Based Practices for Inclusive Design</span></span>
+            <span class="fwho">Momoka Hirai<span class="faff">日本女子大學建築設計學系｜Japan</span></span>
+          </div>
+          <img class="fpic" src="assets/forum/s6.jpg" alt="Momoka Hirai於論壇發表" loading="lazy" width="1400" height="933">
+        </div>
+        <div class="fitem">
+          <span class="ftime en">11:40–12:00</span>
+          <div class="fmain">
+            <span class="ftitle">From Greenway to Age-Friendly Living Network<span class="fsub en">Community Participation and Urban Transformation in Tainan</span></span>
+            <span class="fwho">Chi-Pang Lu<span class="faff">成功大學建築系｜Taiwan</span></span>
+          </div>
+          <img class="fpic" src="assets/forum/s7.jpg" alt="Chi-Pang Lu於論壇發表" loading="lazy" width="1400" height="933">
+        </div>
+        <div class="fitem op">
+          <span class="ftime en">12:00–12:30</span>
+          <div class="fmain">
+            <span class="ftitle">綜合討論<span class="fsub en">Open Forum Discussion</span></span>
+            <span class="fwho">Chia-Han Yang<span class="faff">主持｜成大創意產業設計研究所｜Taiwan</span></span>
+          </div>
+          <img class="fpic" src="assets/forum/dean-1.jpg" alt="Chia-Han Yang於論壇發表" loading="lazy" width="1400" height="933">
+        </div>
+        </div>
+        <div class="shots fgal">
+          <img class="shot" src="assets/forum/group-1.jpg" alt="論壇全體合照" loading="lazy" width="1400" height="933">
+          <img class="shot" src="assets/forum/group-2.jpg" alt="論壇現場" loading="lazy" width="1400" height="933">
+          <img class="shot" src="assets/forum/dean-2.jpg" alt="論壇致詞" loading="lazy" width="1400" height="933">
+          <img class="shot" src="assets/forum/group-3.jpg" alt="與會者合影" loading="lazy" width="1400" height="933">
+        </div>
       </div>
     </div>
   </section>
