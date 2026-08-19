@@ -54,8 +54,8 @@ du -sh assets/video assets/slides
 SITE_PDF="$HOME/Downloads/20260801 NCKU_Green Living (briefly grouping).pdf"
 if [ -f "$SITE_PDF" ]; then
   mkdir -p assets/site
-  # p.5 區位圖、p.2 三時代疊圖、p.4 綠廊願景圖
-  for pair in "5|s-map" "2|s-history" "4|s-vision"; do
+  # p.5 為 Site A–D 區位圖（網站唯一使用的基地圖）
+  for pair in "5|s-map"; do
     pg="${pair%%|*}"; name="${pair#*|}"
     [ -f "assets/site/$name.jpg" ] && { echo "基地圖 $name 已存在，跳過"; continue; }
     pdftoppm -jpeg -jpegopt quality=80 -r 110 -f "$pg" -l "$pg" "$SITE_PDF" "assets/site/tmp-$name"
