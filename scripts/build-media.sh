@@ -48,3 +48,20 @@ wait
 echo "簡報完成："
 for d in assets/slides/g*/; do echo "  $(basename $d): $(ls "$d" | wc -l | tr -d ' ') 頁"; done
 du -sh assets/video assets/slides
+
+# --- 基地簡報 → 三張說明圖 ---
+# 來源：盧紀邦老師 8/1 開幕基地簡報（臺南綠園道・城市參與行動）
+SITE_PDF="$HOME/Downloads/20260801 NCKU_Green Living (briefly grouping).pdf"
+if [ -f "$SITE_PDF" ]; then
+  mkdir -p assets/site
+  # p.5 區位圖、p.2 三時代疊圖、p.4 綠廊願景圖
+  for pair in "5|s-map" "2|s-history" "4|s-vision"; do
+    pg="${pair%%|*}"; name="${pair#*|}"
+    [ -f "assets/site/$name.jpg" ] && { echo "基地圖 $name 已存在，跳過"; continue; }
+    pdftoppm -jpeg -jpegopt quality=80 -r 110 -f "$pg" -l "$pg" "$SITE_PDF" "assets/site/tmp-$name"
+    mv assets/site/tmp-$name-*.jpg "assets/site/$name.jpg"
+  done
+  echo "基地圖完成："; ls -la assets/site/*.jpg | awk '{printf "  %s %.0f KB\n",$9,$5/1024}'
+else
+  echo "跳過基地圖（找不到來源簡報）"
+fi
