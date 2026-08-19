@@ -340,6 +340,9 @@
     /* 捲動浮現：預設可見，動畫是加上去的 */
     @supports (animation-timeline: view()){
       .reveal{animation:reveal-in linear both; animation-timeline:view(); animation-range:entry 0% cover 32%}
+      /* 論壇區塊高達 4.7 倍視窗高，用 cover 會讓頂端長時間停在半透明。
+         改成只吃 entry 區段：頂端進場即完成淡入 */
+      .forum.reveal{animation-range:entry 0% entry 60%}
     }
     /* 標題區地圖視差 */
     @supports (animation-timeline: scroll()){
