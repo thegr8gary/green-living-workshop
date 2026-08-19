@@ -135,9 +135,10 @@
     border-radius:50%; background:var(--bg);
     box-shadow:0 0 0 2px var(--green), 0 0 0 8px rgba(15,157,88,.1);
   }
-  .day summary{isolation:isolate; overflow:hidden}
+  .day summary{isolation:isolate}
   .day summary::after{                 /* 跟隨滑鼠的淡綠光暈，比照 .grp summary::before */
     content:""; position:absolute; inset:0; z-index:-1; opacity:0;
+    border-radius:inherit; overflow:hidden;
     background:radial-gradient(12rem circle at var(--mx,50%) var(--my,50%),
       rgba(15,157,88,.18), transparent 70%);
   }
@@ -254,10 +255,17 @@
     border-radius:8px; overflow:hidden; pointer-events:none;
   }
   .zone{
-    fill:transparent; stroke:transparent; stroke-width:3;
+    fill:rgba(15,157,88,.10); stroke:rgba(15,157,88,.34); stroke-width:2;
     pointer-events:auto; cursor:pointer;
   }
-  .zone.on{fill:rgba(15,157,88,.20); stroke:var(--green-deep)}
+  .zone.on{fill:rgba(15,157,88,.26); stroke:var(--green-deep); stroke-width:3}
+  .zlabels{pointer-events:none}
+  .zl{
+    font-family:Archivo,system-ui,sans-serif; font-size:34px; font-weight:700;
+    fill:var(--green-deep); text-anchor:middle; paint-order:stroke;
+    stroke:rgba(255,255,255,.9); stroke-width:5px;
+  }
+  .zl.on{fill:#064e2e}
   .fig .cap{
     display:block; margin-top:12px; font-size:.78rem; line-height:1.7;
     color:var(--ink-soft); font-weight:300;
@@ -327,7 +335,7 @@
   .grp .topic .sub{display:block; font-size:.78rem; font-weight:300; color:var(--ink-soft); margin-top:2px}
   .grp .mvcb{font-size:.78rem; color:var(--ink-soft); font-weight:300; flex:none}
   /* 跳轉標記：直接到影片／簡報。用 <a> 而非 <button>，避免 summary 內互動元素巢狀 */
-  .jump{display:flex; gap:8px; flex:none}
+  .jump{display:flex; gap:8px; flex:none; margin-left:auto}
   .jb{
     font-size:.72rem; letter-spacing:.06em; color:var(--green-deep);
     text-decoration:none; padding:5px 12px; border-radius:14px;
@@ -336,12 +344,6 @@
   .jb:hover{background:#fff}
   .jb:focus-visible{outline:2px solid var(--green-deep); outline-offset:2px}
 
-  .grp .arw{
-    flex:none; width:38px; height:38px; border-radius:50%;
-    background:var(--green-deep); color:#fff; display:grid; place-items:center;
-    font-size:1rem; margin-left:auto;
-  }
-  .grp[open] .arw{transform:rotate(90deg)}
 
   /* 展開內容：影片 + 簡報翻頁器 */
   .grp-body{padding:22px 0 6px; display:flex; flex-direction:column; gap:22px}
@@ -461,9 +463,6 @@
       box-shadow:0 14px 30px -12px rgba(8,99,58,.3);
       background:var(--bar-hover);
     }
-    .grp .arw{transition:transform .35s cubic-bezier(.22,1,.36,1)}
-    .grp summary:hover .arw{transform:translateX(4px)}
-    .grp[open] summary:hover .arw{transform:rotate(90deg)}
     .th img{transition:opacity .2s ease}
     .pg{transition:opacity .18s ease}
     .shot{transition:transform .4s cubic-bezier(.22,1,.36,1)}
@@ -585,10 +584,16 @@
                  alt="台南綠園道基地區位圖，沿鐵路廊帶由南至北標示 Site A、Site B、Site C、Site D 四個基地範圍"
                  loading="lazy" width="1467" height="825">
             <svg class="zones" viewBox="0 0 1467 825" aria-hidden="true" focusable="false">
-              <ellipse class="zone" data-site="A" cx="610" cy="720" rx="180" ry="140"/>
-              <ellipse class="zone" data-site="B" cx="770" cy="600" rx="285" ry="90"/>
-              <ellipse class="zone" data-site="C" cx="700" cy="425" rx="205" ry="165"/>
-              <ellipse class="zone" data-site="D" cx="775" cy="175" rx="190" ry="160"/>
+              <ellipse class="zone" data-site="A" cx="590" cy="705" rx="165" ry="135"/>
+              <ellipse class="zone" data-site="B" cx="755" cy="605" rx="285" ry="85"/>
+              <ellipse class="zone" data-site="C" cx="660" cy="390" rx="200" ry="175"/>
+              <ellipse class="zone" data-site="D" cx="800" cy="155" rx="180" ry="155"/>
+              <g class="zlabels">
+                <text class="zl" data-site="A" x="560" y="690">Site A</text>
+                <text class="zl" data-site="B" x="880" y="616">Site B</text>
+                <text class="zl" data-site="C" x="640" y="400">Site C</text>
+                <text class="zl" data-site="D" x="835" y="170">Site D</text>
+              </g>
             </svg>
           </span>
           <span class="cap">四個基地沿綠廊由南至北分布，各組再細分為 A1、A2、B1、B2 等範圍。
@@ -850,7 +855,6 @@
           <span class="topic">The Green Living Age Society<span class="sub">Preserving Ecosystem Balance for the Future</span></span>
           <span class="mvcb">Site C1　·　Prof. Lu</span>
           <span class="jump"><a class="jb" href="#g1-video" aria-label="Group 1 影片">影片</a><a class="jb" href="#g1-deck" aria-label="Group 1 簡報">簡報</a></span>
-          <span class="arw" aria-hidden="true">→</span>
         </summary>
         <div class="grp-body">
           <video id="g1-video" class="vid" controls preload="none" poster="assets/video/g1-poster.jpg"
@@ -876,7 +880,6 @@
           <span class="topic">Sound of Cultures</span>
           <span class="mvcb">Site A2　·　Prof. Nawit</span>
           <span class="jump"><a class="jb" href="#g2-video" aria-label="Group 2 影片">影片</a><a class="jb" href="#g2-deck" aria-label="Group 2 簡報">簡報</a></span>
-          <span class="arw" aria-hidden="true">→</span>
         </summary>
         <div class="grp-body">
           <video id="g2-video" class="vid" controls preload="none" poster="assets/video/g2-poster.jpg"
@@ -902,7 +905,6 @@
           <span class="topic">Tainan Green Civic Living Room<span class="sub">Smart Mobility Urban Corridor</span></span>
           <span class="mvcb">Site A1　·　Prof. Apichoke</span>
           <span class="jump"><a class="jb" href="#g3-video" aria-label="Group 3 影片">影片</a><a class="jb" href="#g3-deck" aria-label="Group 3 簡報">簡報</a></span>
-          <span class="arw" aria-hidden="true">→</span>
         </summary>
         <div class="grp-body">
           <video id="g3-video" class="vid" controls preload="none" poster="assets/video/g3-poster.jpg"
@@ -928,7 +930,6 @@
           <span class="topic">Green Living for the Super-Aged Society<span class="sub">串聯通學安全與多元公共空間</span></span>
           <span class="mvcb">Site D2　·　Eric（周黃冠穎）</span>
           <span class="jump"><a class="jb" href="#g4-video" aria-label="Group 4 影片">影片</a><a class="jb" href="#g4-deck" aria-label="Group 4 簡報">簡報</a></span>
-          <span class="arw" aria-hidden="true">→</span>
         </summary>
         <div class="grp-body">
           <video id="g4-video" class="vid" controls preload="none" poster="assets/video/g4-poster.jpg"
@@ -954,7 +955,6 @@
           <span class="topic">Tunnel, Connection of Life</span>
           <span class="mvcb">Site B2　·　Chen（陳侃如）</span>
           <span class="jump"><a class="jb" href="#g5-video" aria-label="Group 5 影片">影片</a><a class="jb" href="#g5-deck" aria-label="Group 5 簡報">簡報</a></span>
-          <span class="arw" aria-hidden="true">→</span>
         </summary>
         <div class="grp-body">
           <video id="g5-video" class="vid" controls preload="none" poster="assets/video/g5-poster.jpg"
@@ -980,7 +980,6 @@
           <span class="topic">Tainan Green Way</span>
           <span class="mvcb">Site B1　·　Prof. Sung</span>
           <span class="jump"><a class="jb" href="#g6-video" aria-label="Group 6 影片">影片</a><a class="jb" href="#g6-deck" aria-label="Group 6 簡報">簡報</a></span>
-          <span class="arw" aria-hidden="true">→</span>
         </summary>
         <div class="grp-body">
           <video id="g6-video" class="vid" controls preload="none" poster="assets/video/g6-poster.jpg"
@@ -1006,7 +1005,6 @@
           <span class="topic">Building Connections Across Generations<span class="sub">Through Safe and Friendly Greenway</span></span>
           <span class="mvcb">Site D1　·　Cheng（鄭庭婷）</span>
           <span class="jump"><a class="jb" href="#g7-video" aria-label="Group 7 影片">影片</a><a class="jb" href="#g7-deck" aria-label="Group 7 簡報">簡報</a></span>
-          <span class="arw" aria-hidden="true">→</span>
         </summary>
         <div class="grp-body">
           <video id="g7-video" class="vid" controls preload="none" poster="assets/video/g7-poster.jpg"
@@ -1261,9 +1259,11 @@ if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
   const zones = [...document.querySelectorAll('.zone')];
   const rows  = [...document.querySelectorAll('.srow[data-site]')];
   if (!zones.length) return;
+  const labels = [...document.querySelectorAll('.zl')];
   const set = (code, on) => {
-    zones.forEach(z => z.classList.toggle('on', on && z.dataset.site === code));
-    rows .forEach(r => r.classList.toggle('on', on && r.dataset.site === code));
+    zones .forEach(z => z.classList.toggle('on', on && z.dataset.site === code));
+    labels.forEach(l => l.classList.toggle('on', on && l.dataset.site === code));
+    rows  .forEach(r => r.classList.toggle('on', on && r.dataset.site === code));
   };
   const bind = el => {
     const c = el.dataset.site;
