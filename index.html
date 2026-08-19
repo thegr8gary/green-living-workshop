@@ -243,45 +243,19 @@
     display:block; background:#fff; padding:16px; border-radius:16px;
     box-shadow:0 1px 3px rgba(28,42,35,.06); position:relative;
   }
-  .fig .cap{
-    display:block; margin-top:12px; font-size:.78rem; line-height:1.7;
-    color:var(--ink-soft); font-weight:300;
-  }
-  .fig .cap .src{display:block; font-size:.71rem; margin-top:2px}
+  .fig img{display:block; width:100%; height:auto; border-radius:8px; background:#fff}
 
-  /* 基地示意圖：純 SVG 重繪，取代原本判讀困難的 Google Maps 截圖。
-     廊帶走勢依原圖實測座標描出，四段以橫向道路分界 */
-  .sitemap{display:block; width:100%; height:auto}
-  .sitemap .road line{stroke:var(--green-mist-2); stroke-width:1.5}
-  .sitemap .rd{
-    font-size:15px; fill:var(--ink-soft); text-anchor:end; font-weight:300;
-    font-family:inherit;
-  }
-  .sitemap .corridor-line{
-    fill:none; stroke:var(--green-mist-2); stroke-width:70;
-    stroke-linecap:round; opacity:.55;
+  /* 四個基地的可 hover 區塊，疊在簡報截圖上。
+     底圖是點陣（Google Maps 截圖），橢圓為對照黃斑目測描出的概略範圍 */
+  .zones{
+    position:absolute; inset:16px; width:calc(100% - 32px); height:calc(100% - 32px);
+    border-radius:8px; overflow:hidden; pointer-events:none;
   }
   .zone{
-    fill:rgba(15,157,88,.13); stroke:rgba(15,157,88,.4); stroke-width:1.5;
+    fill:transparent; stroke:transparent; stroke-width:3;
     pointer-events:auto; cursor:pointer;
   }
-  .zone.on{fill:rgba(15,157,88,.3); stroke:var(--green-deep); stroke-width:2.5}
-  .zlabels{pointer-events:none}
-  .zl{
-    font-size:21px; font-weight:600; fill:var(--green-deep);
-    text-anchor:start; font-family:inherit;
-  }
-  .zl.on{fill:#064e2e}
-  .sitemap .pt{
-    font-size:13px; fill:var(--ink-soft); font-weight:300;
-    font-family:inherit; pointer-events:none;
-  }
-  .sitemap .pt.east{text-anchor:end}
-  .sitemap .pt.west{text-anchor:start}
-  .sitemap .compass{
-    font-size:13px; fill:var(--ink-soft); font-weight:400;
-    text-anchor:end; font-family:inherit;
-  }
+  .zone.on{fill:rgba(15,157,88,.22); stroke:var(--green-deep)}
   .fig .cap{
     display:block; margin-top:12px; font-size:.78rem; line-height:1.7;
     color:var(--ink-soft); font-weight:300;
@@ -616,41 +590,17 @@
             </div>
           </div>
         </div>
-        </div>
 
         <figure class="fig">
           <span class="mount">
-            <svg class="sitemap" viewBox="0 0 900 620" role="img"
-                 aria-label="南鐵綠廊北段基地示意圖：綠廊由南至北被大學路、小東路、東豐路、和緯路、長榮路分為 Site A 至 Site D 四段">
-              <g class="roads">
-                <g class="road"><line x1="70" y1="560" x2="830" y2="560"/><text class="rd" x="60" y="564">大學路</text></g>
-                <g class="road"><line x1="70" y1="448" x2="830" y2="448"/><text class="rd" x="60" y="452">小東路</text></g>
-                <g class="road"><line x1="70" y1="336" x2="830" y2="336"/><text class="rd" x="60" y="340">東豐路</text></g>
-                <g class="road"><line x1="70" y1="192" x2="830" y2="192"/><text class="rd" x="60" y="196">和緯路</text></g>
-                <g class="road"><line x1="70" y1="92" x2="830" y2="92"/><text class="rd" x="60" y="96">長榮路</text></g>
-              </g>
-              <path class="corridor-line" d="M300,80 L440,580"/>
-                <polygon class="zone" data-site="A" points="406,560 474,560 441,448 373,448"/>
-                <polygon class="zone" data-site="B" points="373,448 441,448 407,336 339,336"/>
-                <polygon class="zone" data-site="C" points="339,336 407,336 364,192 296,192"/>
-                <polygon class="zone" data-site="D" points="296,192 364,192 334,92 266,92"/>
-              <g class="zlabels">
-                <text class="zl" data-site="A" x="476" y="511">Site A</text>
-                <text class="zl" data-site="B" x="442" y="399">Site B</text>
-                <text class="zl" data-site="C" x="404" y="271">Site C</text>
-                <text class="zl" data-site="D" x="367" y="149">Site D</text>
-              </g>
-              <g class="poi">
-                <text class="pt east" x="800" y="505">成大校園</text>
-                <text class="pt west" x="150" y="505">文資園區</text>
-                <text class="pt east" x="800" y="395">成大醫院</text>
-                <text class="pt west" x="150" y="395">社會住宅</text>
-                <text class="pt east" x="800" y="270">香草公園</text>
-                <text class="pt west" x="150" y="270">南二中</text>
-                <text class="pt east" x="800" y="148">長榮新城</text>
-                <text class="pt west" x="150" y="148">三校共構</text>
-              </g>
-              <text class="compass" x="828" y="40">N ↑</text>
+            <img src="assets/site/s-map.jpg"
+                 alt="台南綠園道基地區位圖，沿鐵路廊帶由南至北標示 Site A、Site B、Site C、Site D 四個基地範圍"
+                 loading="lazy" width="1467" height="825">
+            <svg class="zones" viewBox="0 0 1467 825" aria-hidden="true" focusable="false">
+              <ellipse class="zone" data-site="A" cx="590" cy="705" rx="165" ry="135"/>
+              <ellipse class="zone" data-site="B" cx="755" cy="605" rx="285" ry="85"/>
+              <ellipse class="zone" data-site="C" cx="660" cy="390" rx="200" ry="175"/>
+              <ellipse class="zone" data-site="D" cx="800" cy="155" rx="180" ry="155"/>
             </svg>
           </span>
           <span class="cap">綠廊由南至北被五條橫向道路分為四段，各段即一個基地；各組再細分為 A1、A2、B1、B2 等範圍。
@@ -1335,11 +1285,9 @@ if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
   const zones = [...document.querySelectorAll('.zone')];
   const rows  = [...document.querySelectorAll('.srow[data-site]')];
   if (!zones.length) return;
-  const labels = [...document.querySelectorAll('.zl')];
   const set = (code, on) => {
-    zones .forEach(z => z.classList.toggle('on', on && z.dataset.site === code));
-    labels.forEach(l => l.classList.toggle('on', on && l.dataset.site === code));
-    rows  .forEach(r => r.classList.toggle('on', on && r.dataset.site === code));
+    zones.forEach(z => z.classList.toggle('on', on && z.dataset.site === code));
+    rows .forEach(r => r.classList.toggle('on', on && r.dataset.site === code));
   };
   const bind = el => {
     const c = el.dataset.site;
