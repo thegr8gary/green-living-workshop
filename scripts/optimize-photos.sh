@@ -8,6 +8,8 @@ SRC="$ROOT/assets/raw"
 OUT="$ROOT/assets/photos"
 WIDTH=1400
 QUALITY=6
+# 每天最多取幾張（906 張全壓沒必要，網站用不到那麼多）
+MAX_PER_DAY="${MAX_PER_DAY:-16}"
 
 [ -d "$SRC" ] || { echo "找不到 $SRC —— 請先把 Drive 的 photo/ 解壓到這裡"; exit 1; }
 mkdir -p "$OUT"
@@ -19,6 +21,7 @@ for day in D1 D2 D3 D4 D5 D6; do
   n=0
   # 依檔名排序，取用時順序穩定
   while IFS= read -r f; do
+    [ "$n" -ge "$MAX_PER_DAY" ] && break
     n=$((n+1))
     out="$OUT/$(echo "$day" | tr 'A-Z' 'a-z')-$(printf '%02d' "$n").jpg"
     ffmpeg -v error -i "$f" -vf "scale=${WIDTH}:-2" -q:v "$QUALITY" "$out" -y

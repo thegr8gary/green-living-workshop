@@ -144,13 +144,14 @@
   .day .who{color:var(--green-deep); font-weight:500}
   .day .who-line{margin-top:12px; font-size:.86rem}
   .shots{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:22px;
-    grid-auto-flow:dense;
+    display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:96px;
+    gap:10px; margin-top:22px; grid-auto-flow:dense;
   }
   .shots .shot:first-child{grid-column:span 2; grid-row:span 2}
   .shots .shot:nth-child(4){grid-column:span 2}
   .shot{
-    min-height:88px; border-radius:16px; display:grid; place-items:center;
+    min-height:88px; border-radius:16px; display:block;
+    width:100%; height:100%; object-fit:cover;
     font-size:.66rem; color:var(--ink-soft); letter-spacing:.13em; background:#fff;
   }
 
@@ -165,12 +166,11 @@
   .wall .col{display:flex; flex-direction:column; gap:14px}
   .wall .pic{
     border-radius:18px; background:var(--green-mist); flex:none;
-    display:grid; place-items:center; color:var(--ink-soft);
-    font-size:.7rem; letter-spacing:.12em; overflow:hidden;
+    display:block; width:100%; object-fit:cover; overflow:hidden;
   }
-  .wall .pic.t1{aspect-ratio:4/3}
-  .wall .pic.t2{aspect-ratio:1/1}
-  .wall .pic.t3{aspect-ratio:3/4}
+  .wall .pic.t1{aspect-ratio:4/3; height:auto}
+  .wall .pic.t2{aspect-ratio:1/1; height:auto}
+  .wall .pic.t3{aspect-ratio:3/4; height:auto}
   /* 靜態是預設值：沒有動畫時就是一個可正常捲動的照片網格 */
   @media (prefers-reduced-motion: no-preference){
     .wall .col{animation:wall-up 42s linear infinite}
@@ -203,7 +203,8 @@
     font-size:.7rem; color:var(--green-deep); letter-spacing:.2em;
     font-weight:600; flex:none; min-width:74px;
   }
-  .bar .topic{font-weight:500; font-size:1.02rem; letter-spacing:.02em; flex:1 1 12rem}
+  .bar .topic{font-weight:500; font-size:1.02rem; letter-spacing:.02em; flex:1 1 14rem; line-height:1.45}
+  .bar .topic .sub{display:block; font-size:.78rem; font-weight:300; color:var(--ink-soft); margin-top:2px}
   .bar .mvcb{font-size:.78rem; color:var(--ink-soft); font-weight:300; flex:none}
   .bar .arw{
     flex:none; width:38px; height:38px; border-radius:50%;
@@ -338,7 +339,7 @@
         <div class="body">
           基地介紹與設計課題說明，接續設計思考與社區設計、高齡生活與都市再生、社區生活與公共空間三場講座。
           <div class="who-line">講者　<span class="who">Chia-Han Yang・Chi-Pang Lu・Shih-Ming Chen</span></div>
-          <div class="shots" data-day="d1"><!--PHOTOS:d1--></div>
+          <div class="shots" data-day="d1"><img class="shot" src="assets/photos/d1-01.jpg" alt="Day 1 開幕與講座" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d1-02.jpg" alt="Day 1 開幕與講座" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d1-03.jpg" alt="Day 1 開幕與講座" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d1-04.jpg" alt="Day 1 開幕與講座" loading="lazy" width="1400" height="933"></div>
         </div>
       </details>
 
@@ -347,7 +348,7 @@
         <div class="body">
           健康老化的概念、理論與實踐，以及高齡照護的文化議題與溝通技巧。
           <div class="who-line">講者　<span class="who">Li-Fan Liu</span></div>
-          <div class="shots" data-day="d2"><!--PHOTOS:d2--></div>
+          <div class="shots" data-day="d2"><img class="shot" src="assets/photos/d2-01.jpg" alt="Day 2 健康老化課程" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d2-02.jpg" alt="Day 2 健康老化課程" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d2-03.jpg" alt="Day 2 健康老化課程" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d2-04.jpg" alt="Day 2 健康老化課程" loading="lazy" width="1400" height="933"></div>
         </div>
       </details>
 
@@ -356,7 +357,7 @@
         <div class="body">
           田野與使用者研究方法，長生里里長分享與對談，下午前往南鐵綠廊北段實地踏查。
           <div class="who-line">講者　<span class="who">Chung-Ching Huang・Li-Wen Sung・Chi-Pang Lu</span></div>
-          <div class="shots" data-day="d3"><!--PHOTOS:d3--></div>
+          <div class="shots" data-day="d3"><img class="shot" src="assets/photos/d3-01.jpg" alt="Day 3 里長對談與基地踏查" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d3-02.jpg" alt="Day 3 里長對談與基地踏查" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d3-03.jpg" alt="Day 3 里長對談與基地踏查" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d3-04.jpg" alt="Day 3 里長對談與基地踏查" loading="lazy" width="1400" height="933"></div>
         </div>
       </details>
 
@@ -365,7 +366,7 @@
         <div class="body">
           各組觀察回報與提案發展，下午進行設計發想工作坊與原型規劃測試。
           <div class="who-line">講者　<span class="who">Chia-Han Yang・Chung-Ching Huang</span></div>
-          <div class="shots" data-day="d4"><!--PHOTOS:d4--></div>
+          <div class="shots" data-day="d4"><img class="shot" src="assets/photos/d4-01.jpg" alt="Day 4 設計發想工作坊" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d4-02.jpg" alt="Day 4 設計發想工作坊" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d4-03.jpg" alt="Day 4 設計發想工作坊" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d4-04.jpg" alt="Day 4 設計發想工作坊" loading="lazy" width="1400" height="933"></div>
         </div>
       </details>
 
@@ -374,7 +375,7 @@
         <div class="body">
           分組工作與設計檢討，教師逐組回饋、修正提案方向。
           <div class="who-line">講者　<span class="who">Li-Wen Sung・Chi-Pang Lu・Chia-Han Yang</span></div>
-          <div class="shots" data-day="d5"><!--PHOTOS:d5--></div>
+          <div class="shots" data-day="d5"><img class="shot" src="assets/photos/d5-01.jpg" alt="Day 5 設計檢討" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d5-02.jpg" alt="Day 5 設計檢討" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d5-03.jpg" alt="Day 5 設計檢討" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d5-04.jpg" alt="Day 5 設計檢討" loading="lazy" width="1400" height="933"></div>
         </div>
       </details>
 
@@ -383,7 +384,7 @@
         <div class="body">
           七組最終提案發表，全體教師出席，午後綜合回饋與討論。
           <div class="who-line">講者　<span class="who">All Faculty</span></div>
-          <div class="shots" data-day="d6"><!--PHOTOS:d6--></div>
+          <div class="shots" data-day="d6"><img class="shot" src="assets/photos/d6-01.jpg" alt="Day 6 成果發表" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d6-02.jpg" alt="Day 6 成果發表" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d6-03.jpg" alt="Day 6 成果發表" loading="lazy" width="1400" height="933"><img class="shot" src="assets/photos/d6-04.jpg" alt="Day 6 成果發表" loading="lazy" width="1400" height="933"></div>
         </div>
       </details>
 
@@ -394,9 +395,132 @@
     <h3 class="sec"><span class="lbl en">MOMENTS</span>工作坊現場</h3>
     <p class="lede">每日精選之外的其他現場紀錄。滑鼠移上去可暫停。</p>
     <div class="wall reveal">
-    <div class="col" aria-hidden="true"><!--WALL--></div>
-    <div class="col rev" aria-hidden="true"><!--WALL--></div>
-    <div class="col" aria-hidden="true"><!--WALL--></div>
+    <div class="col" aria-hidden="true">
+      <img class="pic t1" src="assets/photos/d1-05.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d1-08.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d1-11.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d1-14.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d2-07.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d2-10.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-13.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d3-06.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d3-09.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-12.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d4-05.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-08.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d4-11.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-14.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-07.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d5-10.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-13.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-06.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d6-09.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-12.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d1-05.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d1-08.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d1-11.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d1-14.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d2-07.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d2-10.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-13.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d3-06.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d3-09.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-12.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d4-05.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-08.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d4-11.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-14.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-07.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d5-10.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-13.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-06.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d6-09.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-12.jpg" alt="" loading="lazy" width="1400" height="933">
+    </div>
+    <div class="col rev" aria-hidden="true">
+      <img class="pic t1" src="assets/photos/d1-06.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d1-09.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d1-12.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-05.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d2-08.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d2-11.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-14.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d3-07.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d3-10.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-13.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d4-06.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-09.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d4-12.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d5-05.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-08.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d5-11.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-14.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-07.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d6-10.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-13.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d1-06.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d1-09.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d1-12.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-05.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d2-08.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d2-11.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-14.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d3-07.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d3-10.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-13.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d4-06.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-09.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d4-12.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d5-05.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-08.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d5-11.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-14.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-07.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d6-10.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-13.jpg" alt="" loading="lazy" width="1400" height="933">
+    </div>
+    <div class="col" aria-hidden="true">
+      <img class="pic t1" src="assets/photos/d1-07.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d1-10.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d1-13.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-06.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d2-09.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d2-12.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-05.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d3-08.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d3-11.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-14.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d4-07.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-10.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d4-13.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d5-06.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-09.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d5-12.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d6-05.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-08.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d6-11.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-14.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d1-07.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d1-10.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d1-13.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-06.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d2-09.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d2-12.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-05.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d3-08.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d3-11.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-14.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d4-07.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-10.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d4-13.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d5-06.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-09.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d5-12.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d6-05.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-08.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d6-11.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-14.jpg" alt="" loading="lazy" width="1400" height="933">
+    </div>
     </div>
   </section>
 
@@ -406,43 +530,43 @@
     <div class="groups">
       <a class="bar reveal" href="https://canva.link/he55shpbc9phwcp" target="_blank" rel="noopener">
         <span class="g en">GROUP 1</span>
-        <span class="topic"><span class="pending">題目待補</span></span>
+        <span class="topic">The Green Living Age Society<span class="sub">Preserving Ecosystem Balance for the Future</span></span>
         <span class="mvcb">Site C1　·　Prof. Lu</span>
         <span class="arw" aria-hidden="true">→</span>
       </a>
       <a class="bar reveal" href="https://docs.google.com/presentation/d/1LFMdCXIHXUpcx9NhiPld78PExfdWX594JXCZyQiEs2Q/edit?usp=sharing" target="_blank" rel="noopener">
         <span class="g en">GROUP 2</span>
-        <span class="topic"><span class="pending">題目待補</span></span>
+        <span class="topic">Sound of Cultures</span>
         <span class="mvcb">Site A2　·　Prof. Nawit</span>
         <span class="arw" aria-hidden="true">→</span>
       </a>
       <a class="bar reveal" href="https://canva.link/wsrsvyknm1c8asq" target="_blank" rel="noopener">
         <span class="g en">GROUP 3</span>
-        <span class="topic"><span class="pending">題目待補</span></span>
+        <span class="topic">Tainan Green Civic Living Room<span class="sub">Smart Mobility Urban Corridor</span></span>
         <span class="mvcb">Site A1　·　Prof. Apichoke</span>
         <span class="arw" aria-hidden="true">→</span>
       </a>
       <a class="bar reveal" href="https://canva.link/fb17x747nawe5wy" target="_blank" rel="noopener">
         <span class="g en">GROUP 4</span>
-        <span class="topic"><span class="pending">題目待補</span></span>
+        <span class="topic">Green Living for the Super-Aged Society<span class="sub">串聯通學安全與多元公共空間</span></span>
         <span class="mvcb">Site D2　·　Eric（周黃冠穎）</span>
         <span class="arw" aria-hidden="true">→</span>
       </a>
       <a class="bar reveal" href="https://canva.link/ly6nvvyli5f8ur5" target="_blank" rel="noopener">
         <span class="g en">GROUP 5</span>
-        <span class="topic"><span class="pending">題目待補</span></span>
+        <span class="topic">Tunnel, Connection of Life</span>
         <span class="mvcb">Site B2　·　Chen（陳侃如）</span>
         <span class="arw" aria-hidden="true">→</span>
       </a>
       <a class="bar reveal" href="https://canva.link/iwx0m9wfsed8hqm" target="_blank" rel="noopener">
         <span class="g en">GROUP 6</span>
-        <span class="topic"><span class="pending">題目待補</span></span>
+        <span class="topic">Design Proposal<span class="sub">Site B1 提案</span></span>
         <span class="mvcb">Site B1　·　Prof. Sung</span>
         <span class="arw" aria-hidden="true">→</span>
       </a>
       <a class="bar reveal" href="https://canva.link/4m25l3k9pg4qlmh" target="_blank" rel="noopener">
         <span class="g en">GROUP 7</span>
-        <span class="topic"><span class="pending">題目待補</span></span>
+        <span class="topic">Building Connections Across Generations<span class="sub">Through Safe and Friendly Greenway</span></span>
         <span class="mvcb">Site D1　·　Cheng（鄭庭婷）</span>
         <span class="arw" aria-hidden="true">→</span>
       </a>
