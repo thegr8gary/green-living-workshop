@@ -488,9 +488,14 @@
     .day .when{margin-left:0; width:100%}
     .about,.forum{padding:30px 24px; border-radius:22px}
     .day summary,.day .body{padding-left:20px; padding-right:20px}
-    .site summary{padding:20px 22px}
-    .site .body{padding:22px 22px 26px}
+    .site summary{padding:20px 22px; gap:14px; align-items:center}
+    .site .body{padding:22px 14px 26px}
+    .fig .mount{padding:8px}
+    .zones{inset:8px; width:calc(100% - 16px); height:calc(100% - 16px)}
     .site .hint{display:none}
+    .site .tag{width:100%}                 /* SITE 標籤自成一行 */
+    .site .ttl{flex:1 1 0; min-width:0}     /* 標題可收縮，讓箭頭留在同一行 */
+    .site .arw{width:34px; height:34px}
     .eras{padding:0 0 0 26px}
     .wave{display:none}                    /* 直向波浪在窄螢幕過於雜亂，改用直線 */
     .eras::before{content:""; position:absolute; top:8px; bottom:14px; left:5px; width:2px;
