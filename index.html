@@ -215,22 +215,17 @@
 
   /* 三時代：橫向並列，以直線分隔 */
   /* 三時代軸線：一條線串三個節點，沿用綠廊時間軸語彙 */
-  .eras{
-    display:grid; grid-template-columns:repeat(3,1fr);
-    margin:10px 0 30px; position:relative; padding-top:34px;
+  /* 三時代波浪軸線：線與節點都由 SVG 畫，節點在三等分中心，左右對稱 */
+  .eras{position:relative; margin:14px 0 30px; padding-top:52px}
+  .wave{
+    position:absolute; top:0; left:0; width:100%; height:44px;
+    overflow:visible; display:block;
   }
-  .eras::before{                      /* 軸線：從第一個節點連到第三個節點 */
-    content:""; position:absolute; top:18px; left:6px; width:calc(66.66% + 6px); height:2px;
-    background:linear-gradient(90deg,
-      rgba(15,157,88,.5), rgba(15,157,88,.5) 60%, rgba(15,157,88,.25));
-  }
-  .era{position:relative; padding:0 20px 0 0}
-  .era::before{                       /* 節點圓點，置於標籤正上方 */
-    content:""; position:absolute; top:-21px; left:1px;
-    width:11px; height:11px; border-radius:50%; background:var(--green-mist);
-    box-shadow:0 0 0 2px var(--green), 0 0 0 7px rgba(15,157,88,.12);
-  }
-  .era:last-child::before{background:var(--green)}   /* 「今日」為實心，標示現在 */
+  .wave .wline{fill:none; stroke:url(#wv); stroke-width:2.2; stroke-linecap:round}
+  .wave .wnode{fill:var(--green-mist); stroke:var(--green); stroke-width:2.2}
+  .wave .wnode.now{fill:var(--green)}    /* 「今日」實心，標示現在 */
+  .eracols{display:grid; grid-template-columns:repeat(3,1fr)}
+  .era{text-align:center; padding:0 12px}
   .era .yr{
     display:block; font-size:.65rem; font-weight:600; color:var(--green-deep);
     letter-spacing:.19em; margin-bottom:5px;
@@ -245,27 +240,48 @@
   .fig{margin:0 0 30px}
   /* 圖在淡綠底上，淺邊框幾乎看不見；用白色襯底讓資訊圖與底色分離 */
   .fig .mount{
-    display:block; background:#fff; padding:12px; border-radius:16px;
+    display:block; background:#fff; padding:16px; border-radius:16px;
     box-shadow:0 1px 3px rgba(28,42,35,.06); position:relative;
   }
-  .fig img{display:block; width:100%; height:auto; border-radius:8px; background:#fff}
-  /* 四個基地的可 hover 區塊。底圖是點陣（Google Maps 截圖），橢圓為目測描出的概略範圍 */
-  .zones{
-    position:absolute; inset:12px; width:calc(100% - 24px); height:calc(100% - 24px);
-    border-radius:8px; overflow:hidden; pointer-events:none;
+  .fig .cap{
+    display:block; margin-top:12px; font-size:.78rem; line-height:1.7;
+    color:var(--ink-soft); font-weight:300;
+  }
+  .fig .cap .src{display:block; font-size:.71rem; margin-top:2px}
+
+  /* 基地示意圖：純 SVG 重繪，取代原本判讀困難的 Google Maps 截圖。
+     廊帶走勢依原圖實測座標描出，四段以橫向道路分界 */
+  .sitemap{display:block; width:100%; height:auto}
+  .sitemap .road line{stroke:var(--green-mist-2); stroke-width:1.5}
+  .sitemap .rd{
+    font-size:15px; fill:var(--ink-soft); text-anchor:end; font-weight:300;
+    font-family:inherit;
+  }
+  .sitemap .corridor-line{
+    fill:none; stroke:var(--green-mist-2); stroke-width:70;
+    stroke-linecap:round; opacity:.55;
   }
   .zone{
-    fill:rgba(15,157,88,.10); stroke:rgba(15,157,88,.34); stroke-width:2;
+    fill:rgba(15,157,88,.13); stroke:rgba(15,157,88,.4); stroke-width:1.5;
     pointer-events:auto; cursor:pointer;
   }
-  .zone.on{fill:rgba(15,157,88,.26); stroke:var(--green-deep); stroke-width:3}
+  .zone.on{fill:rgba(15,157,88,.3); stroke:var(--green-deep); stroke-width:2.5}
   .zlabels{pointer-events:none}
   .zl{
-    font-family:Archivo,system-ui,sans-serif; font-size:34px; font-weight:700;
-    fill:var(--green-deep); text-anchor:middle; paint-order:stroke;
-    stroke:rgba(255,255,255,.9); stroke-width:5px;
+    font-size:21px; font-weight:600; fill:var(--green-deep);
+    text-anchor:start; font-family:inherit;
   }
   .zl.on{fill:#064e2e}
+  .sitemap .pt{
+    font-size:13px; fill:var(--ink-soft); font-weight:300;
+    font-family:inherit; pointer-events:none;
+  }
+  .sitemap .pt.east{text-anchor:end}
+  .sitemap .pt.west{text-anchor:start}
+  .sitemap .compass{
+    font-size:13px; fill:var(--ink-soft); font-weight:400;
+    text-anchor:end; font-family:inherit;
+  }
   .fig .cap{
     display:block; margin-top:12px; font-size:.78rem; line-height:1.7;
     color:var(--ink-soft); font-weight:300;
@@ -335,11 +351,11 @@
   .grp .topic .sub{display:block; font-size:.78rem; font-weight:300; color:var(--ink-soft); margin-top:2px}
   .grp .mvcb{font-size:.78rem; color:var(--ink-soft); font-weight:300; flex:none}
   /* 跳轉標記：直接到影片／簡報。用 <a> 而非 <button>，避免 summary 內互動元素巢狀 */
-  .jump{display:flex; gap:8px; flex:none; margin-left:auto}
+  .jump{display:flex; gap:10px; flex:none; margin-left:auto}
   .jb{
-    font-size:.72rem; letter-spacing:.06em; color:var(--green-deep);
-    text-decoration:none; padding:5px 12px; border-radius:14px;
-    background:rgba(255,255,255,.62); font-weight:500; white-space:nowrap;
+    font-size:.82rem; letter-spacing:.06em; color:var(--green-deep);
+    text-decoration:none; padding:9px 16px; border-radius:16px;
+    background:rgba(255,255,255,.72); font-weight:500; white-space:nowrap;
   }
   .jb:hover{background:#fff}
   .jb:focus-visible{outline:2px solid var(--green-deep); outline-offset:2px}
@@ -427,7 +443,8 @@
     /* 膠囊 bar 換行後高度大增，999px 圓角會變成 83–105px 巨弧壓迫文字；
        手機改用固定大圓角，弧線不再侵入文字區 */
     .grp summary{border-radius:28px; padding:24px 26px}
-    .jump{order:3; margin-top:4px}
+    .jump{order:3; margin-top:6px}
+    .jb{padding:11px 18px; font-size:.85rem}
   }
 
   footer{
@@ -502,12 +519,19 @@
     .site summary{padding:20px 22px}
     .site .body{padding:22px 22px 26px}
     .site .hint{display:none}
-    .eras{grid-template-columns:1fr; padding:0 0 0 26px}
-    .eras::before{top:8px; bottom:14px; left:5px; right:auto; width:2px; height:auto;
+    .eras{padding:0 0 0 26px}
+    .wave{display:none}                    /* 直向波浪在窄螢幕過於雜亂，改用直線 */
+    .eras::before{content:""; position:absolute; top:8px; bottom:14px; left:5px; width:2px;
       background:linear-gradient(180deg, rgba(15,157,88,.5), rgba(15,157,88,.28))}
-    .era{padding:0 0 18px}
+    .eracols{grid-template-columns:1fr}
+    .era{text-align:left; padding:0 0 18px; position:relative}
     .era:last-child{padding-bottom:0}
-    .era::before{top:6px; left:-26px; transform:none}
+    .era::before{
+      content:""; position:absolute; top:6px; left:-26px;
+      width:11px; height:11px; border-radius:50%; background:var(--green-mist);
+      box-shadow:0 0 0 2px var(--green), 0 0 0 7px rgba(15,157,88,.12);
+    }
+    .era:last-child::before{background:var(--green)}
     .sites{grid-template-columns:1fr; gap:2px}
     .srow{grid-template-columns:1fr; gap:5px; padding-left:14px}
   }
@@ -564,40 +588,73 @@
         </p>
 
         <div class="eras">
-          <div class="era">
-            <span class="yr en">CHING DYNASTY</span>
-            <span class="what">城牆<span class="en">City wall</span></span>
+          <svg class="wave" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="wv" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#0f9d58" stop-opacity=".55"/>
+                <stop offset="60%" stop-color="#0f9d58" stop-opacity=".45"/>
+                <stop offset="100%" stop-color="#0f9d58" stop-opacity=".28"/>
+              </linearGradient>
+            </defs>
+            <path class="wline" d="M0,20.00 L8,18.90 L16,17.80 L24,16.73 L32,15.69 L40,14.70 L48,13.76 L56,12.88 L64,12.08 L72,11.35 L80,10.71 L88,10.17 L96,9.72 L104,9.38 L112,9.15 L120,9.02 L128,9.01 L136,9.10 L144,9.31 L152,9.63 L160,10.05 L168,10.57 L176,11.18 L184,11.89 L192,12.67 L200,13.53 L208,14.46 L216,15.44 L224,16.47 L232,17.53 L240,18.62 L248,19.72 L256,20.83 L264,21.93 L272,23.00 L280,24.05 L288,25.06 L296,26.01 L304,26.90 L312,27.73 L320,28.48 L328,29.14 L336,29.71 L344,30.18 L352,30.54 L360,30.81 L368,30.96 L376,31.00 L384,30.93 L392,30.75 L400,30.46 L408,30.07 L416,29.57 L424,28.98 L432,28.30 L440,27.53 L448,26.69 L456,25.78 L464,24.81 L472,23.79 L480,22.74 L488,21.65 L496,20.55 L504,19.45 L512,18.35 L520,17.26 L528,16.21 L536,15.19 L544,14.22 L552,13.31 L560,12.47 L568,11.70 L576,11.02 L584,10.43 L592,9.93 L600,9.54 L608,9.25 L616,9.07 L624,9.00 L632,9.04 L640,9.19 L648,9.46 L656,9.82 L664,10.29 L672,10.86 L680,11.52 L688,12.27 L696,13.10 L704,13.99 L712,14.94 L720,15.95 L728,17.00 L736,18.07 L744,19.17 L752,20.28 L760,21.38 L768,22.47 L776,23.53 L784,24.56 L792,25.54 L800,26.47 L808,27.33 L816,28.11 L824,28.82 L832,29.43 L840,29.95 L848,30.37 L856,30.69 L864,30.90 L872,30.99 L880,30.98 L888,30.85 L896,30.62 L904,30.28 L912,29.83 L920,29.29 L928,28.65 L936,27.92 L944,27.12 L952,26.24 L960,25.30 L968,24.31 L976,23.27 L984,22.20 L992,21.10 L1000,20.00"/>
+            <ellipse class="wnode" cx="166.67" cy="10.47" rx="6" ry="6"/>
+            <ellipse class="wnode" cx="500.00" cy="20.00" rx="6" ry="6"/>
+            <ellipse class="wnode now" cx="833.33" cy="29.53" rx="6" ry="6"/>
+          </svg>
+          <div class="eracols">
+            <div class="era">
+              <span class="yr en">CHING DYNASTY</span>
+              <span class="what">城牆<span class="en">City wall</span></span>
+            </div>
+            <div class="era">
+              <span class="yr en">JAPANESE PERIOD</span>
+              <span class="what">園道<span class="en">Parkway</span></span>
+            </div>
+            <div class="era">
+              <span class="yr en">TODAY</span>
+              <span class="what">鐵路地下化綠廊<span class="en">Railway greenway</span></span>
+            </div>
           </div>
-          <div class="era">
-            <span class="yr en">JAPANESE PERIOD</span>
-            <span class="what">園道<span class="en">Parkway</span></span>
-          </div>
-          <div class="era">
-            <span class="yr en">TODAY</span>
-            <span class="what">鐵路地下化綠廊<span class="en">Railway greenway</span></span>
-          </div>
+        </div>
         </div>
 
         <figure class="fig">
           <span class="mount">
-            <img src="assets/site/s-map.jpg"
-                 alt="台南綠園道基地區位圖，沿鐵路廊帶由南至北標示 Site A、Site B、Site C、Site D 四個基地範圍"
-                 loading="lazy" width="1467" height="825">
-            <svg class="zones" viewBox="0 0 1467 825" aria-hidden="true" focusable="false">
-              <ellipse class="zone" data-site="A" cx="590" cy="705" rx="165" ry="135"/>
-              <ellipse class="zone" data-site="B" cx="755" cy="605" rx="285" ry="85"/>
-              <ellipse class="zone" data-site="C" cx="660" cy="390" rx="200" ry="175"/>
-              <ellipse class="zone" data-site="D" cx="800" cy="155" rx="180" ry="155"/>
-              <g class="zlabels">
-                <text class="zl" data-site="A" x="560" y="690">Site A</text>
-                <text class="zl" data-site="B" x="880" y="616">Site B</text>
-                <text class="zl" data-site="C" x="640" y="400">Site C</text>
-                <text class="zl" data-site="D" x="835" y="170">Site D</text>
+            <svg class="sitemap" viewBox="0 0 900 620" role="img"
+                 aria-label="南鐵綠廊北段基地示意圖：綠廊由南至北被大學路、小東路、東豐路、和緯路、長榮路分為 Site A 至 Site D 四段">
+              <g class="roads">
+                <g class="road"><line x1="70" y1="560" x2="830" y2="560"/><text class="rd" x="60" y="564">大學路</text></g>
+                <g class="road"><line x1="70" y1="448" x2="830" y2="448"/><text class="rd" x="60" y="452">小東路</text></g>
+                <g class="road"><line x1="70" y1="336" x2="830" y2="336"/><text class="rd" x="60" y="340">東豐路</text></g>
+                <g class="road"><line x1="70" y1="192" x2="830" y2="192"/><text class="rd" x="60" y="196">和緯路</text></g>
+                <g class="road"><line x1="70" y1="92" x2="830" y2="92"/><text class="rd" x="60" y="96">長榮路</text></g>
               </g>
+              <path class="corridor-line" d="M300,80 L440,580"/>
+                <polygon class="zone" data-site="A" points="406,560 474,560 441,448 373,448"/>
+                <polygon class="zone" data-site="B" points="373,448 441,448 407,336 339,336"/>
+                <polygon class="zone" data-site="C" points="339,336 407,336 364,192 296,192"/>
+                <polygon class="zone" data-site="D" points="296,192 364,192 334,92 266,92"/>
+              <g class="zlabels">
+                <text class="zl" data-site="A" x="476" y="511">Site A</text>
+                <text class="zl" data-site="B" x="442" y="399">Site B</text>
+                <text class="zl" data-site="C" x="404" y="271">Site C</text>
+                <text class="zl" data-site="D" x="367" y="149">Site D</text>
+              </g>
+              <g class="poi">
+                <text class="pt east" x="800" y="505">成大校園</text>
+                <text class="pt west" x="150" y="505">文資園區</text>
+                <text class="pt east" x="800" y="395">成大醫院</text>
+                <text class="pt west" x="150" y="395">社會住宅</text>
+                <text class="pt east" x="800" y="270">香草公園</text>
+                <text class="pt west" x="150" y="270">南二中</text>
+                <text class="pt east" x="800" y="148">長榮新城</text>
+                <text class="pt west" x="150" y="148">三校共構</text>
+              </g>
+              <text class="compass" x="828" y="40">N ↑</text>
             </svg>
           </span>
-          <span class="cap">四個基地沿綠廊由南至北分布，各組再細分為 A1、A2、B1、B2 等範圍。
-            <span class="src">資料來源：仲觀聯合建築師事務所</span>
+          <span class="cap">綠廊由南至北被五條橫向道路分為四段，各段即一個基地；各組再細分為 A1、A2、B1、B2 等範圍。
+            <span class="src">資料來源：仲觀聯合建築師事務所簡報、2026/07/28 Investigation 會議紀錄</span>
           </span>
         </figure>
 
@@ -605,30 +662,26 @@
           <div class="srow" data-site="A" tabindex="0">
             <span class="code en">Site A</span>
             <span class="desc">
-              <span class="zh">台南火車站站前廣場</span>
-              站前廣場改造工程，預計 2027 年底完工。
-            </span>
+              <span class="zh">大學路–小東路段</span>
+              東側成大校園，西側文資園區、新住民與移工特區。</span>
           </div>
           <div class="srow" data-site="B" tabindex="0">
             <span class="code en">Site B</span>
             <span class="desc">
-              <span class="zh">小東路—民族路通學友善廊道</span>
-              涵蓋遺構公園與小東社宅一帶。
-            </span>
+              <span class="zh">小東路–東豐路段</span>
+              東側成大醫院、校園與店家，西側社會住宅。</span>
           </div>
           <div class="srow" data-site="C" tabindex="0">
             <span class="code en">Site C</span>
             <span class="desc">
-              <span class="zh">綠廊中段</span>
-              香菉公園、開元國小、中樓里一帶。
-            </span>
+              <span class="zh">東豐路–和緯路段</span>
+              東側中樓里、長勝里、香草公園，西側南二中、九六新村。</span>
           </div>
           <div class="srow" data-site="D" tabindex="0">
             <span class="code en">Site D</span>
             <span class="desc">
-              <span class="zh">綠廊北段</span>
-              長榮路、大光國小、長榮公園一帶。
-            </span>
+              <span class="zh">和緯路–長榮路段</span>
+              東側長勝里（長榮新城），西側三校共構、小康公園。</span>
           </div>
         </div>
 
@@ -1240,6 +1293,29 @@ document.querySelectorAll('.grp').forEach(grp => {
   });
   show(1);
 });
+
+// 三時代波浪：SVG 用 preserveAspectRatio=none 撐滿寬度，x 與 y 的縮放比不同，
+// 圓會被壓成橢圓。依實際縮放比反向補償 rx，讓節點永遠是正圓。
+(() => {
+  const svg = document.querySelector('.wave');
+  if (!svg) return;
+  const VB_W = 1000, VB_H = 40, R = 6;
+  const fix = () => {
+    const r = svg.getBoundingClientRect();
+    if (!r.width) return;
+    const sx = r.width / VB_W, sy = r.height / VB_H;
+    svg.querySelectorAll('.wnode').forEach(e => {
+      e.setAttribute('rx', (R * sy / sx).toFixed(3));   // 補償 x 方向被拉伸的量
+      e.setAttribute('ry', R);
+    });
+    svg.querySelectorAll('.wline').forEach(e =>
+      e.style.strokeWidth = (2.2 * VB_H / r.height).toFixed(2));
+  };
+  fix();
+  addEventListener('resize', fix);
+  // details 展開後尺寸才確定，展開時重算
+  document.querySelectorAll('details.site').forEach(d => d.addEventListener('toggle', fix));
+})();
 
 // bar 上的光暈跟隨滑鼠。--mx/--my 原本只有 CSS 的 50% 退路，沒有人寫入
 // 用 pointermove 直接改 CSS 變數，不觸發 layout（只重繪 background）
