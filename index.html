@@ -252,10 +252,9 @@
     border-radius:8px; overflow:hidden; pointer-events:none;
   }
   .zone{
-    fill:transparent; stroke:transparent; stroke-width:3;
+    fill:transparent; stroke:transparent;
     pointer-events:auto; cursor:pointer;
   }
-  .zone.on{fill:rgba(15,157,88,.22); stroke:var(--green-deep)}
   .fig .cap{
     display:block; margin-top:12px; font-size:.78rem; line-height:1.7;
     color:var(--ink-soft); font-weight:300;
@@ -445,7 +444,6 @@
     .site summary,.site .arw{transition:background-color .3s ease, transform .35s cubic-bezier(.22,1,.36,1)}
     .site summary:hover .arw{transform:translateX(4px)}
     .site[open] summary:hover .arw{transform:rotate(90deg)}
-    .zone{transition:fill .25s ease, stroke .25s ease}
     .srow{transition:background-color .25s ease}
     .grp summary{transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, background-color .3s ease}
     .grp summary::before{transition:opacity .35s ease}
