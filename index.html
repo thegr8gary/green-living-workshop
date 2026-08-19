@@ -185,33 +185,60 @@
   }
 
   .groups{display:flex; flex-direction:column; gap:16px}
-  /* 膠囊 bar：全圓角 999px，靠色塊與留白建立份量，不描邊 */
-  .bar{
-    position:relative; isolation:isolate; overflow:hidden;
+
+  /* 膠囊 bar：現在是展開控制項（非外部連結） */
+  .grp summary{
+    position:relative; isolation:isolate; overflow:hidden; list-style:none; cursor:pointer;
     display:flex; align-items:center; gap:22px; flex-wrap:wrap;
-    background:var(--bar); border-radius:999px;
-    padding:20px 34px; text-decoration:none; color:inherit;
+    background:var(--bar); border-radius:999px; padding:20px 34px;
   }
-  /* 游標光暈（spotlight）——退路是停在中央 */
-  .bar::before{
+  .grp summary::-webkit-details-marker{display:none}
+  .grp summary::before{
     content:""; position:absolute; inset:0; z-index:-1; opacity:0;
     background:radial-gradient(14rem circle at var(--mx,50%) var(--my,50%),
       rgba(15,157,88,.16), transparent 70%);
   }
-  .bar:hover::before,.bar:focus-within::before{opacity:1}
-  .bar .g{
-    font-size:.7rem; color:var(--green-deep); letter-spacing:.2em;
-    font-weight:600; flex:none; min-width:74px;
-  }
-  .bar .topic{font-weight:500; font-size:1.02rem; letter-spacing:.02em; flex:1 1 14rem; line-height:1.45}
-  .bar .topic .sub{display:block; font-size:.78rem; font-weight:300; color:var(--ink-soft); margin-top:2px}
-  .bar .mvcb{font-size:.78rem; color:var(--ink-soft); font-weight:300; flex:none}
-  .bar .arw{
+  .grp summary:hover::before,.grp summary:focus-within::before{opacity:1}
+  .grp summary:focus-visible{outline:2px solid var(--green-deep); outline-offset:4px}
+  .grp .g{font-size:.7rem; color:var(--green-deep); letter-spacing:.2em; font-weight:600; flex:none; min-width:74px}
+  .grp .topic{font-weight:500; font-size:1.02rem; letter-spacing:.02em; flex:1 1 14rem; line-height:1.45}
+  .grp .topic .sub{display:block; font-size:.78rem; font-weight:300; color:var(--ink-soft); margin-top:2px}
+  .grp .mvcb{font-size:.78rem; color:var(--ink-soft); font-weight:300; flex:none}
+  .grp .arw{
     flex:none; width:38px; height:38px; border-radius:50%;
-    background:var(--green-deep); color:#fff;
-    display:grid; place-items:center; font-size:1rem; margin-left:auto;
+    background:var(--green-deep); color:#fff; display:grid; place-items:center;
+    font-size:1rem; margin-left:auto;
   }
-  .bar:focus-visible{outline:2px solid var(--green-deep); outline-offset:4px}
+  .grp[open] .arw{transform:rotate(90deg)}
+
+  /* 展開內容：影片 + 簡報翻頁器 */
+  .grp-body{padding:22px 0 6px; display:flex; flex-direction:column; gap:22px}
+  .vid{width:100%; height:auto; border-radius:18px; background:#000; display:block}
+  .deck{display:flex; flex-direction:column; gap:12px}
+  .stage{position:relative; border-radius:18px; overflow:hidden; background:var(--green-mist)}
+  .stage .pg{width:100%; height:auto; display:block}
+  .nav{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:46px; height:46px; border:0; border-radius:50%; cursor:pointer;
+    background:rgba(255,255,255,.92); color:var(--green-deep);
+    font-size:1.6rem; line-height:1; display:grid; place-items:center;
+    box-shadow:0 3px 14px rgba(8,99,58,.22);
+  }
+  .nav.prev{left:12px} .nav.next{right:12px}
+  .nav:hover{background:#fff}
+  .nav:focus-visible{outline:2px solid var(--green-deep); outline-offset:3px}
+  .nav[disabled]{opacity:.35; cursor:default}
+  .cnt{
+    position:absolute; right:14px; bottom:12px; font-size:.75rem; letter-spacing:.1em;
+    background:rgba(255,255,255,.92); color:var(--ink); padding:5px 12px; border-radius:999px;
+  }
+  .cnt b{color:var(--green-deep)}
+  .thumbs{display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; scrollbar-width:thin}
+  .th{border:0; padding:0; background:none; cursor:pointer; flex:none; border-radius:8px; overflow:hidden; line-height:0}
+  .th img{width:92px; height:52px; object-fit:cover; display:block; opacity:.55}
+  .th[aria-current="true"] img{opacity:1; outline:2px solid var(--green-deep); outline-offset:-2px}
+  .th:focus-visible{outline:2px solid var(--green-deep); outline-offset:2px}
+
   .pending{
     color:var(--pend-ink); background:var(--pend-bg); font-size:.77rem;
     padding:3px 11px; border-radius:999px; font-weight:400;
@@ -244,15 +271,18 @@
     .day summary{transition:background-color .3s ease, transform .3s cubic-bezier(.22,1,.36,1)}
     .day summary::before{transition:box-shadow .45s cubic-bezier(.22,1,.36,1), background-color .45s ease}
     .day summary:hover{transform:translateX(3px)}
-    .bar{transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, background-color .3s ease}
-    .bar::before{transition:opacity .35s ease}
-    .bar:hover,.bar:focus-within{
+    .grp summary{transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease, background-color .3s ease}
+    .grp summary::before{transition:opacity .35s ease}
+    .grp summary:hover{
       transform:translateY(-4px);
       box-shadow:0 14px 30px -12px rgba(8,99,58,.3);
       background:var(--bar-hover);
     }
-    .bar .arw{transition:transform .35s cubic-bezier(.22,1,.36,1)}
-    .bar:hover .arw{transform:translateX(5px)}
+    .grp .arw{transition:transform .35s cubic-bezier(.22,1,.36,1)}
+    .grp summary:hover .arw{transform:translateX(4px)}
+    .grp[open] summary:hover .arw{transform:rotate(90deg)}
+    .th img{transition:opacity .2s ease}
+    .pg{transition:opacity .18s ease}
     .shot{transition:transform .4s cubic-bezier(.22,1,.36,1)}
     .shot:hover{transform:scale(1.03)}
 
@@ -528,48 +558,181 @@
     <h3 class="sec"><span class="lbl en">GROUP OUTCOMES</span>各組成果</h3>
     <p class="lede">七組提案，點擊開啟各組完整簡報。</p>
     <div class="groups">
-      <a class="bar reveal" href="https://canva.link/he55shpbc9phwcp" target="_blank" rel="noopener">
-        <span class="g en">GROUP 1</span>
-        <span class="topic">The Green Living Age Society<span class="sub">Preserving Ecosystem Balance for the Future</span></span>
-        <span class="mvcb">Site C1　·　Prof. Lu</span>
-        <span class="arw" aria-hidden="true">→</span>
-      </a>
-      <a class="bar reveal" href="https://docs.google.com/presentation/d/1LFMdCXIHXUpcx9NhiPld78PExfdWX594JXCZyQiEs2Q/edit?usp=sharing" target="_blank" rel="noopener">
-        <span class="g en">GROUP 2</span>
-        <span class="topic">Sound of Cultures</span>
-        <span class="mvcb">Site A2　·　Prof. Nawit</span>
-        <span class="arw" aria-hidden="true">→</span>
-      </a>
-      <a class="bar reveal" href="https://canva.link/wsrsvyknm1c8asq" target="_blank" rel="noopener">
-        <span class="g en">GROUP 3</span>
-        <span class="topic">Tainan Green Civic Living Room<span class="sub">Smart Mobility Urban Corridor</span></span>
-        <span class="mvcb">Site A1　·　Prof. Apichoke</span>
-        <span class="arw" aria-hidden="true">→</span>
-      </a>
-      <a class="bar reveal" href="https://canva.link/fb17x747nawe5wy" target="_blank" rel="noopener">
-        <span class="g en">GROUP 4</span>
-        <span class="topic">Green Living for the Super-Aged Society<span class="sub">串聯通學安全與多元公共空間</span></span>
-        <span class="mvcb">Site D2　·　Eric（周黃冠穎）</span>
-        <span class="arw" aria-hidden="true">→</span>
-      </a>
-      <a class="bar reveal" href="https://canva.link/ly6nvvyli5f8ur5" target="_blank" rel="noopener">
-        <span class="g en">GROUP 5</span>
-        <span class="topic">Tunnel, Connection of Life</span>
-        <span class="mvcb">Site B2　·　Chen（陳侃如）</span>
-        <span class="arw" aria-hidden="true">→</span>
-      </a>
-      <a class="bar reveal" href="https://canva.link/iwx0m9wfsed8hqm" target="_blank" rel="noopener">
-        <span class="g en">GROUP 6</span>
-        <span class="topic">Design Proposal<span class="sub">Site B1 提案</span></span>
-        <span class="mvcb">Site B1　·　Prof. Sung</span>
-        <span class="arw" aria-hidden="true">→</span>
-      </a>
-      <a class="bar reveal" href="https://canva.link/4m25l3k9pg4qlmh" target="_blank" rel="noopener">
-        <span class="g en">GROUP 7</span>
-        <span class="topic">Building Connections Across Generations<span class="sub">Through Safe and Friendly Greenway</span></span>
-        <span class="mvcb">Site D1　·　Cheng（鄭庭婷）</span>
-        <span class="arw" aria-hidden="true">→</span>
-      </a>
+      <details class="grp reveal" data-g="1" data-total="50">
+        <summary>
+          <span class="g en">GROUP 1</span>
+          <span class="topic">The Green Living Age Society<span class="sub">Preserving Ecosystem Balance for the Future</span></span>
+          <span class="mvcb">Site C1　·　Prof. Lu</span>
+          <span class="arw" aria-hidden="true">→</span>
+        </summary>
+        <div class="grp-body">
+          <video class="vid" controls preload="none" poster="assets/video/g1-poster.jpg"
+                 width="1280" height="720">
+            <source src="assets/video/g1.mp4" type="video/mp4">
+            您的瀏覽器不支援影片播放，請<a href="assets/video/g1.mp4">下載影片</a>。
+          </video>
+          <div class="deck">
+            <div class="stage">
+              <img class="pg" src="assets/slides/g1/p-01.jpg" alt="Group 1 簡報第 1 頁" width="1440" height="810">
+              <button class="nav prev" aria-label="上一頁">‹</button>
+              <button class="nav next" aria-label="下一頁">›</button>
+              <span class="cnt en"><b>1</b> / 50</span>
+            </div>
+            <div class="thumbs"><button class="th" data-i="1" aria-label="第 1 頁"><img src="assets/slides/g1/p-01.jpg" alt="" loading="lazy"></button><button class="th" data-i="2" aria-label="第 2 頁"><img src="assets/slides/g1/p-02.jpg" alt="" loading="lazy"></button><button class="th" data-i="3" aria-label="第 3 頁"><img src="assets/slides/g1/p-03.jpg" alt="" loading="lazy"></button><button class="th" data-i="4" aria-label="第 4 頁"><img src="assets/slides/g1/p-04.jpg" alt="" loading="lazy"></button><button class="th" data-i="5" aria-label="第 5 頁"><img src="assets/slides/g1/p-05.jpg" alt="" loading="lazy"></button><button class="th" data-i="6" aria-label="第 6 頁"><img src="assets/slides/g1/p-06.jpg" alt="" loading="lazy"></button><button class="th" data-i="7" aria-label="第 7 頁"><img src="assets/slides/g1/p-07.jpg" alt="" loading="lazy"></button><button class="th" data-i="8" aria-label="第 8 頁"><img src="assets/slides/g1/p-08.jpg" alt="" loading="lazy"></button><button class="th" data-i="9" aria-label="第 9 頁"><img src="assets/slides/g1/p-09.jpg" alt="" loading="lazy"></button><button class="th" data-i="10" aria-label="第 10 頁"><img src="assets/slides/g1/p-10.jpg" alt="" loading="lazy"></button><button class="th" data-i="11" aria-label="第 11 頁"><img src="assets/slides/g1/p-11.jpg" alt="" loading="lazy"></button><button class="th" data-i="12" aria-label="第 12 頁"><img src="assets/slides/g1/p-12.jpg" alt="" loading="lazy"></button><button class="th" data-i="13" aria-label="第 13 頁"><img src="assets/slides/g1/p-13.jpg" alt="" loading="lazy"></button><button class="th" data-i="14" aria-label="第 14 頁"><img src="assets/slides/g1/p-14.jpg" alt="" loading="lazy"></button><button class="th" data-i="15" aria-label="第 15 頁"><img src="assets/slides/g1/p-15.jpg" alt="" loading="lazy"></button><button class="th" data-i="16" aria-label="第 16 頁"><img src="assets/slides/g1/p-16.jpg" alt="" loading="lazy"></button><button class="th" data-i="17" aria-label="第 17 頁"><img src="assets/slides/g1/p-17.jpg" alt="" loading="lazy"></button><button class="th" data-i="18" aria-label="第 18 頁"><img src="assets/slides/g1/p-18.jpg" alt="" loading="lazy"></button><button class="th" data-i="19" aria-label="第 19 頁"><img src="assets/slides/g1/p-19.jpg" alt="" loading="lazy"></button><button class="th" data-i="20" aria-label="第 20 頁"><img src="assets/slides/g1/p-20.jpg" alt="" loading="lazy"></button><button class="th" data-i="21" aria-label="第 21 頁"><img src="assets/slides/g1/p-21.jpg" alt="" loading="lazy"></button><button class="th" data-i="22" aria-label="第 22 頁"><img src="assets/slides/g1/p-22.jpg" alt="" loading="lazy"></button><button class="th" data-i="23" aria-label="第 23 頁"><img src="assets/slides/g1/p-23.jpg" alt="" loading="lazy"></button><button class="th" data-i="24" aria-label="第 24 頁"><img src="assets/slides/g1/p-24.jpg" alt="" loading="lazy"></button><button class="th" data-i="25" aria-label="第 25 頁"><img src="assets/slides/g1/p-25.jpg" alt="" loading="lazy"></button><button class="th" data-i="26" aria-label="第 26 頁"><img src="assets/slides/g1/p-26.jpg" alt="" loading="lazy"></button><button class="th" data-i="27" aria-label="第 27 頁"><img src="assets/slides/g1/p-27.jpg" alt="" loading="lazy"></button><button class="th" data-i="28" aria-label="第 28 頁"><img src="assets/slides/g1/p-28.jpg" alt="" loading="lazy"></button><button class="th" data-i="29" aria-label="第 29 頁"><img src="assets/slides/g1/p-29.jpg" alt="" loading="lazy"></button><button class="th" data-i="30" aria-label="第 30 頁"><img src="assets/slides/g1/p-30.jpg" alt="" loading="lazy"></button><button class="th" data-i="31" aria-label="第 31 頁"><img src="assets/slides/g1/p-31.jpg" alt="" loading="lazy"></button><button class="th" data-i="32" aria-label="第 32 頁"><img src="assets/slides/g1/p-32.jpg" alt="" loading="lazy"></button><button class="th" data-i="33" aria-label="第 33 頁"><img src="assets/slides/g1/p-33.jpg" alt="" loading="lazy"></button><button class="th" data-i="34" aria-label="第 34 頁"><img src="assets/slides/g1/p-34.jpg" alt="" loading="lazy"></button><button class="th" data-i="35" aria-label="第 35 頁"><img src="assets/slides/g1/p-35.jpg" alt="" loading="lazy"></button><button class="th" data-i="36" aria-label="第 36 頁"><img src="assets/slides/g1/p-36.jpg" alt="" loading="lazy"></button><button class="th" data-i="37" aria-label="第 37 頁"><img src="assets/slides/g1/p-37.jpg" alt="" loading="lazy"></button><button class="th" data-i="38" aria-label="第 38 頁"><img src="assets/slides/g1/p-38.jpg" alt="" loading="lazy"></button><button class="th" data-i="39" aria-label="第 39 頁"><img src="assets/slides/g1/p-39.jpg" alt="" loading="lazy"></button><button class="th" data-i="40" aria-label="第 40 頁"><img src="assets/slides/g1/p-40.jpg" alt="" loading="lazy"></button><button class="th" data-i="41" aria-label="第 41 頁"><img src="assets/slides/g1/p-41.jpg" alt="" loading="lazy"></button><button class="th" data-i="42" aria-label="第 42 頁"><img src="assets/slides/g1/p-42.jpg" alt="" loading="lazy"></button><button class="th" data-i="43" aria-label="第 43 頁"><img src="assets/slides/g1/p-43.jpg" alt="" loading="lazy"></button><button class="th" data-i="44" aria-label="第 44 頁"><img src="assets/slides/g1/p-44.jpg" alt="" loading="lazy"></button><button class="th" data-i="45" aria-label="第 45 頁"><img src="assets/slides/g1/p-45.jpg" alt="" loading="lazy"></button><button class="th" data-i="46" aria-label="第 46 頁"><img src="assets/slides/g1/p-46.jpg" alt="" loading="lazy"></button><button class="th" data-i="47" aria-label="第 47 頁"><img src="assets/slides/g1/p-47.jpg" alt="" loading="lazy"></button><button class="th" data-i="48" aria-label="第 48 頁"><img src="assets/slides/g1/p-48.jpg" alt="" loading="lazy"></button><button class="th" data-i="49" aria-label="第 49 頁"><img src="assets/slides/g1/p-49.jpg" alt="" loading="lazy"></button><button class="th" data-i="50" aria-label="第 50 頁"><img src="assets/slides/g1/p-50.jpg" alt="" loading="lazy"></button></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="grp reveal" data-g="2" data-total="36">
+        <summary>
+          <span class="g en">GROUP 2</span>
+          <span class="topic">Sound of Cultures</span>
+          <span class="mvcb">Site A2　·　Prof. Nawit</span>
+          <span class="arw" aria-hidden="true">→</span>
+        </summary>
+        <div class="grp-body">
+          <video class="vid" controls preload="none" poster="assets/video/g2-poster.jpg"
+                 width="1280" height="720">
+            <source src="assets/video/g2.mp4" type="video/mp4">
+            您的瀏覽器不支援影片播放，請<a href="assets/video/g2.mp4">下載影片</a>。
+          </video>
+          <div class="deck">
+            <div class="stage">
+              <img class="pg" src="assets/slides/g2/p-01.jpg" alt="Group 2 簡報第 1 頁" width="1440" height="810">
+              <button class="nav prev" aria-label="上一頁">‹</button>
+              <button class="nav next" aria-label="下一頁">›</button>
+              <span class="cnt en"><b>1</b> / 36</span>
+            </div>
+            <div class="thumbs"><button class="th" data-i="1" aria-label="第 1 頁"><img src="assets/slides/g2/p-01.jpg" alt="" loading="lazy"></button><button class="th" data-i="2" aria-label="第 2 頁"><img src="assets/slides/g2/p-02.jpg" alt="" loading="lazy"></button><button class="th" data-i="3" aria-label="第 3 頁"><img src="assets/slides/g2/p-03.jpg" alt="" loading="lazy"></button><button class="th" data-i="4" aria-label="第 4 頁"><img src="assets/slides/g2/p-04.jpg" alt="" loading="lazy"></button><button class="th" data-i="5" aria-label="第 5 頁"><img src="assets/slides/g2/p-05.jpg" alt="" loading="lazy"></button><button class="th" data-i="6" aria-label="第 6 頁"><img src="assets/slides/g2/p-06.jpg" alt="" loading="lazy"></button><button class="th" data-i="7" aria-label="第 7 頁"><img src="assets/slides/g2/p-07.jpg" alt="" loading="lazy"></button><button class="th" data-i="8" aria-label="第 8 頁"><img src="assets/slides/g2/p-08.jpg" alt="" loading="lazy"></button><button class="th" data-i="9" aria-label="第 9 頁"><img src="assets/slides/g2/p-09.jpg" alt="" loading="lazy"></button><button class="th" data-i="10" aria-label="第 10 頁"><img src="assets/slides/g2/p-10.jpg" alt="" loading="lazy"></button><button class="th" data-i="11" aria-label="第 11 頁"><img src="assets/slides/g2/p-11.jpg" alt="" loading="lazy"></button><button class="th" data-i="12" aria-label="第 12 頁"><img src="assets/slides/g2/p-12.jpg" alt="" loading="lazy"></button><button class="th" data-i="13" aria-label="第 13 頁"><img src="assets/slides/g2/p-13.jpg" alt="" loading="lazy"></button><button class="th" data-i="14" aria-label="第 14 頁"><img src="assets/slides/g2/p-14.jpg" alt="" loading="lazy"></button><button class="th" data-i="15" aria-label="第 15 頁"><img src="assets/slides/g2/p-15.jpg" alt="" loading="lazy"></button><button class="th" data-i="16" aria-label="第 16 頁"><img src="assets/slides/g2/p-16.jpg" alt="" loading="lazy"></button><button class="th" data-i="17" aria-label="第 17 頁"><img src="assets/slides/g2/p-17.jpg" alt="" loading="lazy"></button><button class="th" data-i="18" aria-label="第 18 頁"><img src="assets/slides/g2/p-18.jpg" alt="" loading="lazy"></button><button class="th" data-i="19" aria-label="第 19 頁"><img src="assets/slides/g2/p-19.jpg" alt="" loading="lazy"></button><button class="th" data-i="20" aria-label="第 20 頁"><img src="assets/slides/g2/p-20.jpg" alt="" loading="lazy"></button><button class="th" data-i="21" aria-label="第 21 頁"><img src="assets/slides/g2/p-21.jpg" alt="" loading="lazy"></button><button class="th" data-i="22" aria-label="第 22 頁"><img src="assets/slides/g2/p-22.jpg" alt="" loading="lazy"></button><button class="th" data-i="23" aria-label="第 23 頁"><img src="assets/slides/g2/p-23.jpg" alt="" loading="lazy"></button><button class="th" data-i="24" aria-label="第 24 頁"><img src="assets/slides/g2/p-24.jpg" alt="" loading="lazy"></button><button class="th" data-i="25" aria-label="第 25 頁"><img src="assets/slides/g2/p-25.jpg" alt="" loading="lazy"></button><button class="th" data-i="26" aria-label="第 26 頁"><img src="assets/slides/g2/p-26.jpg" alt="" loading="lazy"></button><button class="th" data-i="27" aria-label="第 27 頁"><img src="assets/slides/g2/p-27.jpg" alt="" loading="lazy"></button><button class="th" data-i="28" aria-label="第 28 頁"><img src="assets/slides/g2/p-28.jpg" alt="" loading="lazy"></button><button class="th" data-i="29" aria-label="第 29 頁"><img src="assets/slides/g2/p-29.jpg" alt="" loading="lazy"></button><button class="th" data-i="30" aria-label="第 30 頁"><img src="assets/slides/g2/p-30.jpg" alt="" loading="lazy"></button><button class="th" data-i="31" aria-label="第 31 頁"><img src="assets/slides/g2/p-31.jpg" alt="" loading="lazy"></button><button class="th" data-i="32" aria-label="第 32 頁"><img src="assets/slides/g2/p-32.jpg" alt="" loading="lazy"></button><button class="th" data-i="33" aria-label="第 33 頁"><img src="assets/slides/g2/p-33.jpg" alt="" loading="lazy"></button><button class="th" data-i="34" aria-label="第 34 頁"><img src="assets/slides/g2/p-34.jpg" alt="" loading="lazy"></button><button class="th" data-i="35" aria-label="第 35 頁"><img src="assets/slides/g2/p-35.jpg" alt="" loading="lazy"></button><button class="th" data-i="36" aria-label="第 36 頁"><img src="assets/slides/g2/p-36.jpg" alt="" loading="lazy"></button></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="grp reveal" data-g="3" data-total="34">
+        <summary>
+          <span class="g en">GROUP 3</span>
+          <span class="topic">Tainan Green Civic Living Room<span class="sub">Smart Mobility Urban Corridor</span></span>
+          <span class="mvcb">Site A1　·　Prof. Apichoke</span>
+          <span class="arw" aria-hidden="true">→</span>
+        </summary>
+        <div class="grp-body">
+          <video class="vid" controls preload="none" poster="assets/video/g3-poster.jpg"
+                 width="1280" height="720">
+            <source src="assets/video/g3.mp4" type="video/mp4">
+            您的瀏覽器不支援影片播放，請<a href="assets/video/g3.mp4">下載影片</a>。
+          </video>
+          <div class="deck">
+            <div class="stage">
+              <img class="pg" src="assets/slides/g3/p-01.jpg" alt="Group 3 簡報第 1 頁" width="1440" height="810">
+              <button class="nav prev" aria-label="上一頁">‹</button>
+              <button class="nav next" aria-label="下一頁">›</button>
+              <span class="cnt en"><b>1</b> / 34</span>
+            </div>
+            <div class="thumbs"><button class="th" data-i="1" aria-label="第 1 頁"><img src="assets/slides/g3/p-01.jpg" alt="" loading="lazy"></button><button class="th" data-i="2" aria-label="第 2 頁"><img src="assets/slides/g3/p-02.jpg" alt="" loading="lazy"></button><button class="th" data-i="3" aria-label="第 3 頁"><img src="assets/slides/g3/p-03.jpg" alt="" loading="lazy"></button><button class="th" data-i="4" aria-label="第 4 頁"><img src="assets/slides/g3/p-04.jpg" alt="" loading="lazy"></button><button class="th" data-i="5" aria-label="第 5 頁"><img src="assets/slides/g3/p-05.jpg" alt="" loading="lazy"></button><button class="th" data-i="6" aria-label="第 6 頁"><img src="assets/slides/g3/p-06.jpg" alt="" loading="lazy"></button><button class="th" data-i="7" aria-label="第 7 頁"><img src="assets/slides/g3/p-07.jpg" alt="" loading="lazy"></button><button class="th" data-i="8" aria-label="第 8 頁"><img src="assets/slides/g3/p-08.jpg" alt="" loading="lazy"></button><button class="th" data-i="9" aria-label="第 9 頁"><img src="assets/slides/g3/p-09.jpg" alt="" loading="lazy"></button><button class="th" data-i="10" aria-label="第 10 頁"><img src="assets/slides/g3/p-10.jpg" alt="" loading="lazy"></button><button class="th" data-i="11" aria-label="第 11 頁"><img src="assets/slides/g3/p-11.jpg" alt="" loading="lazy"></button><button class="th" data-i="12" aria-label="第 12 頁"><img src="assets/slides/g3/p-12.jpg" alt="" loading="lazy"></button><button class="th" data-i="13" aria-label="第 13 頁"><img src="assets/slides/g3/p-13.jpg" alt="" loading="lazy"></button><button class="th" data-i="14" aria-label="第 14 頁"><img src="assets/slides/g3/p-14.jpg" alt="" loading="lazy"></button><button class="th" data-i="15" aria-label="第 15 頁"><img src="assets/slides/g3/p-15.jpg" alt="" loading="lazy"></button><button class="th" data-i="16" aria-label="第 16 頁"><img src="assets/slides/g3/p-16.jpg" alt="" loading="lazy"></button><button class="th" data-i="17" aria-label="第 17 頁"><img src="assets/slides/g3/p-17.jpg" alt="" loading="lazy"></button><button class="th" data-i="18" aria-label="第 18 頁"><img src="assets/slides/g3/p-18.jpg" alt="" loading="lazy"></button><button class="th" data-i="19" aria-label="第 19 頁"><img src="assets/slides/g3/p-19.jpg" alt="" loading="lazy"></button><button class="th" data-i="20" aria-label="第 20 頁"><img src="assets/slides/g3/p-20.jpg" alt="" loading="lazy"></button><button class="th" data-i="21" aria-label="第 21 頁"><img src="assets/slides/g3/p-21.jpg" alt="" loading="lazy"></button><button class="th" data-i="22" aria-label="第 22 頁"><img src="assets/slides/g3/p-22.jpg" alt="" loading="lazy"></button><button class="th" data-i="23" aria-label="第 23 頁"><img src="assets/slides/g3/p-23.jpg" alt="" loading="lazy"></button><button class="th" data-i="24" aria-label="第 24 頁"><img src="assets/slides/g3/p-24.jpg" alt="" loading="lazy"></button><button class="th" data-i="25" aria-label="第 25 頁"><img src="assets/slides/g3/p-25.jpg" alt="" loading="lazy"></button><button class="th" data-i="26" aria-label="第 26 頁"><img src="assets/slides/g3/p-26.jpg" alt="" loading="lazy"></button><button class="th" data-i="27" aria-label="第 27 頁"><img src="assets/slides/g3/p-27.jpg" alt="" loading="lazy"></button><button class="th" data-i="28" aria-label="第 28 頁"><img src="assets/slides/g3/p-28.jpg" alt="" loading="lazy"></button><button class="th" data-i="29" aria-label="第 29 頁"><img src="assets/slides/g3/p-29.jpg" alt="" loading="lazy"></button><button class="th" data-i="30" aria-label="第 30 頁"><img src="assets/slides/g3/p-30.jpg" alt="" loading="lazy"></button><button class="th" data-i="31" aria-label="第 31 頁"><img src="assets/slides/g3/p-31.jpg" alt="" loading="lazy"></button><button class="th" data-i="32" aria-label="第 32 頁"><img src="assets/slides/g3/p-32.jpg" alt="" loading="lazy"></button><button class="th" data-i="33" aria-label="第 33 頁"><img src="assets/slides/g3/p-33.jpg" alt="" loading="lazy"></button><button class="th" data-i="34" aria-label="第 34 頁"><img src="assets/slides/g3/p-34.jpg" alt="" loading="lazy"></button></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="grp reveal" data-g="4" data-total="26">
+        <summary>
+          <span class="g en">GROUP 4</span>
+          <span class="topic">Green Living for the Super-Aged Society<span class="sub">串聯通學安全與多元公共空間</span></span>
+          <span class="mvcb">Site D2　·　Eric（周黃冠穎）</span>
+          <span class="arw" aria-hidden="true">→</span>
+        </summary>
+        <div class="grp-body">
+          <video class="vid" controls preload="none" poster="assets/video/g4-poster.jpg"
+                 width="1280" height="720">
+            <source src="assets/video/g4.mp4" type="video/mp4">
+            您的瀏覽器不支援影片播放，請<a href="assets/video/g4.mp4">下載影片</a>。
+          </video>
+          <div class="deck">
+            <div class="stage">
+              <img class="pg" src="assets/slides/g4/p-01.jpg" alt="Group 4 簡報第 1 頁" width="1440" height="810">
+              <button class="nav prev" aria-label="上一頁">‹</button>
+              <button class="nav next" aria-label="下一頁">›</button>
+              <span class="cnt en"><b>1</b> / 26</span>
+            </div>
+            <div class="thumbs"><button class="th" data-i="1" aria-label="第 1 頁"><img src="assets/slides/g4/p-01.jpg" alt="" loading="lazy"></button><button class="th" data-i="2" aria-label="第 2 頁"><img src="assets/slides/g4/p-02.jpg" alt="" loading="lazy"></button><button class="th" data-i="3" aria-label="第 3 頁"><img src="assets/slides/g4/p-03.jpg" alt="" loading="lazy"></button><button class="th" data-i="4" aria-label="第 4 頁"><img src="assets/slides/g4/p-04.jpg" alt="" loading="lazy"></button><button class="th" data-i="5" aria-label="第 5 頁"><img src="assets/slides/g4/p-05.jpg" alt="" loading="lazy"></button><button class="th" data-i="6" aria-label="第 6 頁"><img src="assets/slides/g4/p-06.jpg" alt="" loading="lazy"></button><button class="th" data-i="7" aria-label="第 7 頁"><img src="assets/slides/g4/p-07.jpg" alt="" loading="lazy"></button><button class="th" data-i="8" aria-label="第 8 頁"><img src="assets/slides/g4/p-08.jpg" alt="" loading="lazy"></button><button class="th" data-i="9" aria-label="第 9 頁"><img src="assets/slides/g4/p-09.jpg" alt="" loading="lazy"></button><button class="th" data-i="10" aria-label="第 10 頁"><img src="assets/slides/g4/p-10.jpg" alt="" loading="lazy"></button><button class="th" data-i="11" aria-label="第 11 頁"><img src="assets/slides/g4/p-11.jpg" alt="" loading="lazy"></button><button class="th" data-i="12" aria-label="第 12 頁"><img src="assets/slides/g4/p-12.jpg" alt="" loading="lazy"></button><button class="th" data-i="13" aria-label="第 13 頁"><img src="assets/slides/g4/p-13.jpg" alt="" loading="lazy"></button><button class="th" data-i="14" aria-label="第 14 頁"><img src="assets/slides/g4/p-14.jpg" alt="" loading="lazy"></button><button class="th" data-i="15" aria-label="第 15 頁"><img src="assets/slides/g4/p-15.jpg" alt="" loading="lazy"></button><button class="th" data-i="16" aria-label="第 16 頁"><img src="assets/slides/g4/p-16.jpg" alt="" loading="lazy"></button><button class="th" data-i="17" aria-label="第 17 頁"><img src="assets/slides/g4/p-17.jpg" alt="" loading="lazy"></button><button class="th" data-i="18" aria-label="第 18 頁"><img src="assets/slides/g4/p-18.jpg" alt="" loading="lazy"></button><button class="th" data-i="19" aria-label="第 19 頁"><img src="assets/slides/g4/p-19.jpg" alt="" loading="lazy"></button><button class="th" data-i="20" aria-label="第 20 頁"><img src="assets/slides/g4/p-20.jpg" alt="" loading="lazy"></button><button class="th" data-i="21" aria-label="第 21 頁"><img src="assets/slides/g4/p-21.jpg" alt="" loading="lazy"></button><button class="th" data-i="22" aria-label="第 22 頁"><img src="assets/slides/g4/p-22.jpg" alt="" loading="lazy"></button><button class="th" data-i="23" aria-label="第 23 頁"><img src="assets/slides/g4/p-23.jpg" alt="" loading="lazy"></button><button class="th" data-i="24" aria-label="第 24 頁"><img src="assets/slides/g4/p-24.jpg" alt="" loading="lazy"></button><button class="th" data-i="25" aria-label="第 25 頁"><img src="assets/slides/g4/p-25.jpg" alt="" loading="lazy"></button><button class="th" data-i="26" aria-label="第 26 頁"><img src="assets/slides/g4/p-26.jpg" alt="" loading="lazy"></button></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="grp reveal" data-g="5" data-total="35">
+        <summary>
+          <span class="g en">GROUP 5</span>
+          <span class="topic">Tunnel, Connection of Life</span>
+          <span class="mvcb">Site B2　·　Chen（陳侃如）</span>
+          <span class="arw" aria-hidden="true">→</span>
+        </summary>
+        <div class="grp-body">
+          <video class="vid" controls preload="none" poster="assets/video/g5-poster.jpg"
+                 width="1280" height="720">
+            <source src="assets/video/g5.mp4" type="video/mp4">
+            您的瀏覽器不支援影片播放，請<a href="assets/video/g5.mp4">下載影片</a>。
+          </video>
+          <div class="deck">
+            <div class="stage">
+              <img class="pg" src="assets/slides/g5/p-01.jpg" alt="Group 5 簡報第 1 頁" width="1440" height="810">
+              <button class="nav prev" aria-label="上一頁">‹</button>
+              <button class="nav next" aria-label="下一頁">›</button>
+              <span class="cnt en"><b>1</b> / 35</span>
+            </div>
+            <div class="thumbs"><button class="th" data-i="1" aria-label="第 1 頁"><img src="assets/slides/g5/p-01.jpg" alt="" loading="lazy"></button><button class="th" data-i="2" aria-label="第 2 頁"><img src="assets/slides/g5/p-02.jpg" alt="" loading="lazy"></button><button class="th" data-i="3" aria-label="第 3 頁"><img src="assets/slides/g5/p-03.jpg" alt="" loading="lazy"></button><button class="th" data-i="4" aria-label="第 4 頁"><img src="assets/slides/g5/p-04.jpg" alt="" loading="lazy"></button><button class="th" data-i="5" aria-label="第 5 頁"><img src="assets/slides/g5/p-05.jpg" alt="" loading="lazy"></button><button class="th" data-i="6" aria-label="第 6 頁"><img src="assets/slides/g5/p-06.jpg" alt="" loading="lazy"></button><button class="th" data-i="7" aria-label="第 7 頁"><img src="assets/slides/g5/p-07.jpg" alt="" loading="lazy"></button><button class="th" data-i="8" aria-label="第 8 頁"><img src="assets/slides/g5/p-08.jpg" alt="" loading="lazy"></button><button class="th" data-i="9" aria-label="第 9 頁"><img src="assets/slides/g5/p-09.jpg" alt="" loading="lazy"></button><button class="th" data-i="10" aria-label="第 10 頁"><img src="assets/slides/g5/p-10.jpg" alt="" loading="lazy"></button><button class="th" data-i="11" aria-label="第 11 頁"><img src="assets/slides/g5/p-11.jpg" alt="" loading="lazy"></button><button class="th" data-i="12" aria-label="第 12 頁"><img src="assets/slides/g5/p-12.jpg" alt="" loading="lazy"></button><button class="th" data-i="13" aria-label="第 13 頁"><img src="assets/slides/g5/p-13.jpg" alt="" loading="lazy"></button><button class="th" data-i="14" aria-label="第 14 頁"><img src="assets/slides/g5/p-14.jpg" alt="" loading="lazy"></button><button class="th" data-i="15" aria-label="第 15 頁"><img src="assets/slides/g5/p-15.jpg" alt="" loading="lazy"></button><button class="th" data-i="16" aria-label="第 16 頁"><img src="assets/slides/g5/p-16.jpg" alt="" loading="lazy"></button><button class="th" data-i="17" aria-label="第 17 頁"><img src="assets/slides/g5/p-17.jpg" alt="" loading="lazy"></button><button class="th" data-i="18" aria-label="第 18 頁"><img src="assets/slides/g5/p-18.jpg" alt="" loading="lazy"></button><button class="th" data-i="19" aria-label="第 19 頁"><img src="assets/slides/g5/p-19.jpg" alt="" loading="lazy"></button><button class="th" data-i="20" aria-label="第 20 頁"><img src="assets/slides/g5/p-20.jpg" alt="" loading="lazy"></button><button class="th" data-i="21" aria-label="第 21 頁"><img src="assets/slides/g5/p-21.jpg" alt="" loading="lazy"></button><button class="th" data-i="22" aria-label="第 22 頁"><img src="assets/slides/g5/p-22.jpg" alt="" loading="lazy"></button><button class="th" data-i="23" aria-label="第 23 頁"><img src="assets/slides/g5/p-23.jpg" alt="" loading="lazy"></button><button class="th" data-i="24" aria-label="第 24 頁"><img src="assets/slides/g5/p-24.jpg" alt="" loading="lazy"></button><button class="th" data-i="25" aria-label="第 25 頁"><img src="assets/slides/g5/p-25.jpg" alt="" loading="lazy"></button><button class="th" data-i="26" aria-label="第 26 頁"><img src="assets/slides/g5/p-26.jpg" alt="" loading="lazy"></button><button class="th" data-i="27" aria-label="第 27 頁"><img src="assets/slides/g5/p-27.jpg" alt="" loading="lazy"></button><button class="th" data-i="28" aria-label="第 28 頁"><img src="assets/slides/g5/p-28.jpg" alt="" loading="lazy"></button><button class="th" data-i="29" aria-label="第 29 頁"><img src="assets/slides/g5/p-29.jpg" alt="" loading="lazy"></button><button class="th" data-i="30" aria-label="第 30 頁"><img src="assets/slides/g5/p-30.jpg" alt="" loading="lazy"></button><button class="th" data-i="31" aria-label="第 31 頁"><img src="assets/slides/g5/p-31.jpg" alt="" loading="lazy"></button><button class="th" data-i="32" aria-label="第 32 頁"><img src="assets/slides/g5/p-32.jpg" alt="" loading="lazy"></button><button class="th" data-i="33" aria-label="第 33 頁"><img src="assets/slides/g5/p-33.jpg" alt="" loading="lazy"></button><button class="th" data-i="34" aria-label="第 34 頁"><img src="assets/slides/g5/p-34.jpg" alt="" loading="lazy"></button><button class="th" data-i="35" aria-label="第 35 頁"><img src="assets/slides/g5/p-35.jpg" alt="" loading="lazy"></button></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="grp reveal" data-g="6" data-total="25">
+        <summary>
+          <span class="g en">GROUP 6</span>
+          <span class="topic">Tainan Green Way</span>
+          <span class="mvcb">Site B1　·　Prof. Sung</span>
+          <span class="arw" aria-hidden="true">→</span>
+        </summary>
+        <div class="grp-body">
+          <video class="vid" controls preload="none" poster="assets/video/g6-poster.jpg"
+                 width="1280" height="720">
+            <source src="assets/video/g6.mp4" type="video/mp4">
+            您的瀏覽器不支援影片播放，請<a href="assets/video/g6.mp4">下載影片</a>。
+          </video>
+          <div class="deck">
+            <div class="stage">
+              <img class="pg" src="assets/slides/g6/p-01.jpg" alt="Group 6 簡報第 1 頁" width="1440" height="810">
+              <button class="nav prev" aria-label="上一頁">‹</button>
+              <button class="nav next" aria-label="下一頁">›</button>
+              <span class="cnt en"><b>1</b> / 25</span>
+            </div>
+            <div class="thumbs"><button class="th" data-i="1" aria-label="第 1 頁"><img src="assets/slides/g6/p-01.jpg" alt="" loading="lazy"></button><button class="th" data-i="2" aria-label="第 2 頁"><img src="assets/slides/g6/p-02.jpg" alt="" loading="lazy"></button><button class="th" data-i="3" aria-label="第 3 頁"><img src="assets/slides/g6/p-03.jpg" alt="" loading="lazy"></button><button class="th" data-i="4" aria-label="第 4 頁"><img src="assets/slides/g6/p-04.jpg" alt="" loading="lazy"></button><button class="th" data-i="5" aria-label="第 5 頁"><img src="assets/slides/g6/p-05.jpg" alt="" loading="lazy"></button><button class="th" data-i="6" aria-label="第 6 頁"><img src="assets/slides/g6/p-06.jpg" alt="" loading="lazy"></button><button class="th" data-i="7" aria-label="第 7 頁"><img src="assets/slides/g6/p-07.jpg" alt="" loading="lazy"></button><button class="th" data-i="8" aria-label="第 8 頁"><img src="assets/slides/g6/p-08.jpg" alt="" loading="lazy"></button><button class="th" data-i="9" aria-label="第 9 頁"><img src="assets/slides/g6/p-09.jpg" alt="" loading="lazy"></button><button class="th" data-i="10" aria-label="第 10 頁"><img src="assets/slides/g6/p-10.jpg" alt="" loading="lazy"></button><button class="th" data-i="11" aria-label="第 11 頁"><img src="assets/slides/g6/p-11.jpg" alt="" loading="lazy"></button><button class="th" data-i="12" aria-label="第 12 頁"><img src="assets/slides/g6/p-12.jpg" alt="" loading="lazy"></button><button class="th" data-i="13" aria-label="第 13 頁"><img src="assets/slides/g6/p-13.jpg" alt="" loading="lazy"></button><button class="th" data-i="14" aria-label="第 14 頁"><img src="assets/slides/g6/p-14.jpg" alt="" loading="lazy"></button><button class="th" data-i="15" aria-label="第 15 頁"><img src="assets/slides/g6/p-15.jpg" alt="" loading="lazy"></button><button class="th" data-i="16" aria-label="第 16 頁"><img src="assets/slides/g6/p-16.jpg" alt="" loading="lazy"></button><button class="th" data-i="17" aria-label="第 17 頁"><img src="assets/slides/g6/p-17.jpg" alt="" loading="lazy"></button><button class="th" data-i="18" aria-label="第 18 頁"><img src="assets/slides/g6/p-18.jpg" alt="" loading="lazy"></button><button class="th" data-i="19" aria-label="第 19 頁"><img src="assets/slides/g6/p-19.jpg" alt="" loading="lazy"></button><button class="th" data-i="20" aria-label="第 20 頁"><img src="assets/slides/g6/p-20.jpg" alt="" loading="lazy"></button><button class="th" data-i="21" aria-label="第 21 頁"><img src="assets/slides/g6/p-21.jpg" alt="" loading="lazy"></button><button class="th" data-i="22" aria-label="第 22 頁"><img src="assets/slides/g6/p-22.jpg" alt="" loading="lazy"></button><button class="th" data-i="23" aria-label="第 23 頁"><img src="assets/slides/g6/p-23.jpg" alt="" loading="lazy"></button><button class="th" data-i="24" aria-label="第 24 頁"><img src="assets/slides/g6/p-24.jpg" alt="" loading="lazy"></button><button class="th" data-i="25" aria-label="第 25 頁"><img src="assets/slides/g6/p-25.jpg" alt="" loading="lazy"></button></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="grp reveal" data-g="7" data-total="31">
+        <summary>
+          <span class="g en">GROUP 7</span>
+          <span class="topic">Building Connections Across Generations<span class="sub">Through Safe and Friendly Greenway</span></span>
+          <span class="mvcb">Site D1　·　Cheng（鄭庭婷）</span>
+          <span class="arw" aria-hidden="true">→</span>
+        </summary>
+        <div class="grp-body">
+          <video class="vid" controls preload="none" poster="assets/video/g7-poster.jpg"
+                 width="1280" height="720">
+            <source src="assets/video/g7.mp4" type="video/mp4">
+            您的瀏覽器不支援影片播放，請<a href="assets/video/g7.mp4">下載影片</a>。
+          </video>
+          <div class="deck">
+            <div class="stage">
+              <img class="pg" src="assets/slides/g7/p-01.jpg" alt="Group 7 簡報第 1 頁" width="1440" height="810">
+              <button class="nav prev" aria-label="上一頁">‹</button>
+              <button class="nav next" aria-label="下一頁">›</button>
+              <span class="cnt en"><b>1</b> / 31</span>
+            </div>
+            <div class="thumbs"><button class="th" data-i="1" aria-label="第 1 頁"><img src="assets/slides/g7/p-01.jpg" alt="" loading="lazy"></button><button class="th" data-i="2" aria-label="第 2 頁"><img src="assets/slides/g7/p-02.jpg" alt="" loading="lazy"></button><button class="th" data-i="3" aria-label="第 3 頁"><img src="assets/slides/g7/p-03.jpg" alt="" loading="lazy"></button><button class="th" data-i="4" aria-label="第 4 頁"><img src="assets/slides/g7/p-04.jpg" alt="" loading="lazy"></button><button class="th" data-i="5" aria-label="第 5 頁"><img src="assets/slides/g7/p-05.jpg" alt="" loading="lazy"></button><button class="th" data-i="6" aria-label="第 6 頁"><img src="assets/slides/g7/p-06.jpg" alt="" loading="lazy"></button><button class="th" data-i="7" aria-label="第 7 頁"><img src="assets/slides/g7/p-07.jpg" alt="" loading="lazy"></button><button class="th" data-i="8" aria-label="第 8 頁"><img src="assets/slides/g7/p-08.jpg" alt="" loading="lazy"></button><button class="th" data-i="9" aria-label="第 9 頁"><img src="assets/slides/g7/p-09.jpg" alt="" loading="lazy"></button><button class="th" data-i="10" aria-label="第 10 頁"><img src="assets/slides/g7/p-10.jpg" alt="" loading="lazy"></button><button class="th" data-i="11" aria-label="第 11 頁"><img src="assets/slides/g7/p-11.jpg" alt="" loading="lazy"></button><button class="th" data-i="12" aria-label="第 12 頁"><img src="assets/slides/g7/p-12.jpg" alt="" loading="lazy"></button><button class="th" data-i="13" aria-label="第 13 頁"><img src="assets/slides/g7/p-13.jpg" alt="" loading="lazy"></button><button class="th" data-i="14" aria-label="第 14 頁"><img src="assets/slides/g7/p-14.jpg" alt="" loading="lazy"></button><button class="th" data-i="15" aria-label="第 15 頁"><img src="assets/slides/g7/p-15.jpg" alt="" loading="lazy"></button><button class="th" data-i="16" aria-label="第 16 頁"><img src="assets/slides/g7/p-16.jpg" alt="" loading="lazy"></button><button class="th" data-i="17" aria-label="第 17 頁"><img src="assets/slides/g7/p-17.jpg" alt="" loading="lazy"></button><button class="th" data-i="18" aria-label="第 18 頁"><img src="assets/slides/g7/p-18.jpg" alt="" loading="lazy"></button><button class="th" data-i="19" aria-label="第 19 頁"><img src="assets/slides/g7/p-19.jpg" alt="" loading="lazy"></button><button class="th" data-i="20" aria-label="第 20 頁"><img src="assets/slides/g7/p-20.jpg" alt="" loading="lazy"></button><button class="th" data-i="21" aria-label="第 21 頁"><img src="assets/slides/g7/p-21.jpg" alt="" loading="lazy"></button><button class="th" data-i="22" aria-label="第 22 頁"><img src="assets/slides/g7/p-22.jpg" alt="" loading="lazy"></button><button class="th" data-i="23" aria-label="第 23 頁"><img src="assets/slides/g7/p-23.jpg" alt="" loading="lazy"></button><button class="th" data-i="24" aria-label="第 24 頁"><img src="assets/slides/g7/p-24.jpg" alt="" loading="lazy"></button><button class="th" data-i="25" aria-label="第 25 頁"><img src="assets/slides/g7/p-25.jpg" alt="" loading="lazy"></button><button class="th" data-i="26" aria-label="第 26 頁"><img src="assets/slides/g7/p-26.jpg" alt="" loading="lazy"></button><button class="th" data-i="27" aria-label="第 27 頁"><img src="assets/slides/g7/p-27.jpg" alt="" loading="lazy"></button><button class="th" data-i="28" aria-label="第 28 頁"><img src="assets/slides/g7/p-28.jpg" alt="" loading="lazy"></button><button class="th" data-i="29" aria-label="第 29 頁"><img src="assets/slides/g7/p-29.jpg" alt="" loading="lazy"></button><button class="th" data-i="30" aria-label="第 30 頁"><img src="assets/slides/g7/p-30.jpg" alt="" loading="lazy"></button><button class="th" data-i="31" aria-label="第 31 頁"><img src="assets/slides/g7/p-31.jpg" alt="" loading="lazy"></button></div>
+          </div>
+        </div>
+      </details>
+
     </div>
   </section>
 
@@ -662,3 +825,42 @@
 </script>
 </body>
 </html>
+
+<script>
+// 簡報翻頁器：左右鍵／縮圖／箭頭，全部同步
+document.querySelectorAll('.grp').forEach(grp => {
+  const g = grp.dataset.g, total = +grp.dataset.total;
+  const pg = grp.querySelector('.pg');
+  const cnt = grp.querySelector('.cnt b');
+  const prev = grp.querySelector('.prev'), next = grp.querySelector('.next');
+  const thumbs = [...grp.querySelectorAll('.th')];
+  let i = 1;
+
+  function show(n) {
+    i = Math.min(Math.max(n, 1), total);
+    pg.src = `assets/slides/g${g}/p-${String(i).padStart(2,'0')}.jpg`;
+    pg.alt = `Group ${g} 簡報第 ${i} 頁`;
+    cnt.textContent = i;
+    prev.disabled = i === 1;
+    next.disabled = i === total;
+    thumbs.forEach((t, k) => t.setAttribute('aria-current', k + 1 === i ? 'true' : 'false'));
+    const cur = thumbs[i-1];
+    if (cur) cur.scrollIntoView({block:'nearest', inline:'center'});
+  }
+  prev.addEventListener('click', () => show(i - 1));
+  next.addEventListener('click', () => show(i + 1));
+  thumbs.forEach((t, k) => t.addEventListener('click', () => show(k + 1)));
+
+  // 只在該組展開且焦點在其中時才吃方向鍵，避免干擾整頁捲動
+  grp.addEventListener('keydown', e => {
+    if (!grp.open) return;
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); show(i - 1); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); show(i + 1); }
+  });
+  // 收合時暫停影片，避免看不見卻還在播
+  grp.addEventListener('toggle', () => {
+    if (!grp.open) { const v = grp.querySelector('video'); if (v && !v.paused) v.pause(); }
+  });
+  show(1);
+});
+</script>

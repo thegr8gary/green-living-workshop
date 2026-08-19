@@ -1,3 +1,5 @@
 assets/raw/
+assets/videos/
+assets/pdf/
 *.zip
 .DS_Store
