@@ -56,6 +56,11 @@ MAX_PER_DAY=16 ./scripts/optimize-photos.sh
 
 兩支腳本都會跳過已存在的輸出，可重複執行。需要 `ffmpeg` 與 `pdftoppm`（`brew install ffmpeg poppler`）。
 
+> ⚠️ **`assets/photos/` 內有人工指定來源的照片**（如 `d3-01`、`d3-02`、`d3-04`、`d6-02`、`d6-03`、`d6-04`），
+> 它們的來源檔名與 `assets/raw/` 的排序序號無關。`optimize-photos.sh` 是依序號輸出的，
+> 因此**不可用 `FORCE=1` 全量重跑**，否則這些照片會被排序第 N 張覆蓋掉。
+> 要重新產生單一張，請先手動刪除該檔再執行。
+
 ## 部署
 
 ```bash
