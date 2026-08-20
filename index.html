@@ -171,10 +171,12 @@
   }
   .shots .shot:first-child{grid-column:span 2; grid-row:span 2}
   .shots .shot:nth-child(4){grid-column:span 2}
-  .fgal.shots .shot:nth-child(4){grid-row:span 2}
   /* 這張是直式團體自拍，塞進 2x1 細長格只看得到 40% 高度；
      38% 的預設取景會停在天空，改用 67% 對準人臉 */
   .shots[data-day="d3"] .shot:nth-child(4){object-position:center 67%}
+  /* 五人合照在 2x1 格只看得到 43% 高度，人臉落在 15-35%；
+     38% 的預設取景會切到頭頂，上移到 20% */
+  .fgal.shots .shot:nth-child(4){object-position:center 20%}
   .shot{
     min-height:88px; border-radius:16px; display:block;
     width:100%; height:100%; object-fit:cover; object-position:center 38%;
