@@ -60,7 +60,9 @@
   /* ── §5 斜切滿版標題列（只用在大面積）── */
   header{
     position:relative; background:var(--green-text); color:var(--on-green);
-    padding:clamp(3.4rem,7vw,5.6rem) 6vw clamp(4.6rem,9vw,7rem); overflow:hidden;
+    /* 水平內距複製 .wrap 的置中公式（max-width:920px 置中 + 34px），
+       確保寬螢幕下標題與下方內文區塊左邊界對齊；背景色塊本身仍 border-box 滿版，不受影響 */
+    padding:clamp(3.4rem,7vw,5.6rem) max(34px, calc((100vw - 920px) / 2 + 34px)) clamp(4.6rem,9vw,7rem); overflow:hidden;
     clip-path:polygon(0 0,100% 0,100% 78%,62% 78%,55% 100%,0 82%);
   }
   .mapwash{
@@ -480,7 +482,7 @@
   @media print{ .reveal{animation:none; opacity:1} .day .body{display:block !important} }
 
   @media(max-width:640px){
-    header{clip-path:polygon(0 0,100% 0,100% 88%,55% 88%,45% 100%,0 92%); padding-left:8vw; padding-right:8vw}
+    header{clip-path:polygon(0 0,100% 0,100% 88%,55% 88%,45% 100%,0 92%); padding-left:24px; padding-right:24px}
     .wrap{padding:0 24px}
     .corridor{padding-left:32px}
     .day summary::before{left:-28px}
@@ -722,126 +724,126 @@
     <p class="lede">每日精選之外的其他現場紀錄。滑鼠移上去可暫停。</p>
     <div class="wall reveal">
     <div class="col" aria-hidden="true">
-      <img class="pic t1" src="assets/photos/d1-05.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d1-08.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d1-14.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d2-07.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d2-10.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d2-13.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d3-06.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d3-09.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d3-12.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d4-05.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d4-08.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d4-11.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d4-14.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d5-07.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d5-10.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d5-13.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d6-06.jpg" alt="" loading="lazy" width="1400" height="2100">
-      <img class="pic t1" src="assets/photos/d6-09.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d6-12.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d1-05.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d1-08.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d1-14.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d2-07.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d2-10.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d2-13.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d3-06.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d3-09.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d3-12.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d4-05.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d4-08.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d4-11.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d4-14.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d5-07.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d5-10.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d5-13.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d6-06.jpg" alt="" loading="lazy" width="1400" height="2100">
-      <img class="pic t1" src="assets/photos/d6-09.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d6-12.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d1-05.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d1-08.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d1-14.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d2-07.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d2-10.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-13.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d3-06.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d3-09.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-12.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d4-05.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-08.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d4-11.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-14.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-07.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d5-10.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-13.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-06.jpg" alt="" loading="eager" width="1400" height="2100">
+      <img class="pic t1" src="assets/photos/d6-09.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-12.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d1-05.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d1-08.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d1-14.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d2-07.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d2-10.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-13.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d3-06.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d3-09.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-12.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d4-05.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-08.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d4-11.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-14.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-07.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d5-10.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-13.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-06.jpg" alt="" loading="eager" width="1400" height="2100">
+      <img class="pic t1" src="assets/photos/d6-09.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-12.jpg" alt="" loading="eager" width="1400" height="933">
     </div>
     <div class="col rev" aria-hidden="true">
-      <img class="pic t1" src="assets/photos/d1-06.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d1-09.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d1-12.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d2-05.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d2-08.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d2-11.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d2-14.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d3-07.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d3-10.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d3-13.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d4-06.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d4-09.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d4-12.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d5-05.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d5-08.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d5-11.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d5-14.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d6-10.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d6-13.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d1-06.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d1-09.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d1-12.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d2-05.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d2-08.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d2-11.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d2-14.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d3-07.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d3-10.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d3-13.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d4-06.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d4-09.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d4-12.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d5-05.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d5-08.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d5-11.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d5-14.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d6-10.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d6-13.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d1-06.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d1-09.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d1-12.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-05.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d2-08.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d2-11.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-14.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d3-07.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d3-10.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-13.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d4-06.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-09.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d4-12.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d5-05.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-08.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d5-11.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-14.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d6-10.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-13.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d1-06.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d1-09.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d1-12.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-05.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d2-08.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d2-11.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-14.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d3-07.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d3-10.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-13.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d4-06.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-09.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d4-12.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d5-05.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-08.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d5-11.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-14.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d6-10.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-13.jpg" alt="" loading="eager" width="1400" height="933">
     </div>
     <div class="col" aria-hidden="true">
-      <img class="pic t1" src="assets/photos/d1-07.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d1-10.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d1-13.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d2-06.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d2-09.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d2-12.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d3-05.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d3-08.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d3-11.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d3-14.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d4-07.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d4-10.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d4-13.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d5-06.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d5-09.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d5-12.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d6-05.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d6-08.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d6-11.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d6-14.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d1-07.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d1-10.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d1-13.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d2-06.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d2-09.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d2-12.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d3-05.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d3-08.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d3-11.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d3-14.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d4-07.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d4-10.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d4-13.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d5-06.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d5-09.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d5-12.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t2" src="assets/photos/d6-05.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d6-08.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t1" src="assets/photos/d6-11.jpg" alt="" loading="lazy" width="1400" height="933">
-      <img class="pic t3" src="assets/photos/d6-14.jpg" alt="" loading="lazy" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d1-07.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d1-10.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d1-13.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-06.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d2-09.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d2-12.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-05.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d3-08.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d3-11.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-14.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d4-07.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-10.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d4-13.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d5-06.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-09.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d5-12.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d6-05.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-08.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d6-11.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-14.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d1-07.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d1-10.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d1-13.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d2-06.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d2-09.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d2-12.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-05.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d3-08.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d3-11.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d3-14.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d4-07.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d4-10.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d4-13.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d5-06.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d5-09.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d5-12.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t2" src="assets/photos/d6-05.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-08.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t1" src="assets/photos/d6-11.jpg" alt="" loading="eager" width="1400" height="933">
+      <img class="pic t3" src="assets/photos/d6-14.jpg" alt="" loading="eager" width="1400" height="933">
     </div>
     </div>
   </section>
