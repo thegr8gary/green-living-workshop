@@ -521,7 +521,10 @@
   .langsw button{
     border:0; background:none; cursor:pointer; font:inherit; line-height:1;
     font-size:.74rem; letter-spacing:.14em; font-weight:500;
-    padding:7px 15px; border-radius:999px; color:var(--on-green-soft);
+    /* 「中」與「EN」字寬天生不同，靠 min-width 撐成等寬；
+       letter-spacing 會在字尾多留一格，用等量 padding 補回來讓字視覺置中 */
+    padding:7px 0 7px .14em; min-width:52px; text-align:center;
+    border-radius:999px; color:var(--on-green-soft);
   }
   .langsw button[aria-pressed="true"]{background:rgba(255,255,255,.92); color:var(--green-deep)}
   .langsw button:focus-visible{outline:2px solid #fff; outline-offset:3px}
@@ -535,7 +538,7 @@
   }
   @media(max-width:640px){
     .langsw{top:14px; right:14px; padding:3px}
-    .langsw button{padding:6px 12px; font-size:.7rem}
+    .langsw button{padding:6px 0 6px .14em; min-width:46px; font-size:.7rem}
   }
   @media print{ .langsw{display:none} }
 
@@ -576,8 +579,8 @@
 <body>
 
 <div class="langsw" role="group" aria-label="Language / 語言">
-  <button type="button" data-set-lang="zh" aria-pressed="true" lang="zh-Hant">中文</button>
-  <button type="button" data-set-lang="en" aria-pressed="false" lang="en">English</button>
+  <button type="button" data-set-lang="zh" aria-pressed="true" lang="zh-Hant" aria-label="中文">中</button>
+  <button type="button" data-set-lang="en" aria-pressed="false" lang="en" aria-label="English">EN</button>
 </div>
 
 <header class="grain">
@@ -1228,9 +1231,9 @@
 
   <footer>
     <span data-l="zh">超高齡社會下的綠色生活<br>
-    國立成功大學　·　Made by Gary with Claude Code</span>
+    國立成功大學</span>
     <span data-l="en">Green Living for the Super-Aged Society<br>
-    National Cheng Kung University　·　Made by Gary with Claude Code</span>
+    National Cheng Kung University</span>
   </footer>
 </div>
 
