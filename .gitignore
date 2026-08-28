@@ -3,3 +3,6 @@ assets/videos/
 assets/pdf/
 *.zip
 .DS_Store
+
+# 校對用的臨時工具，不屬於網站內容
+copy-review.html
