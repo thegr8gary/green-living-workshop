@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* 語言 bootstrap：必須在 <style> 之前阻塞執行，讓 CSS 一開始就拿到正確的 lang，
+   否則會先畫出中文再跳成英文。優先序：?lang= → localStorage → 預設中文 */
+(()=>{try{
+  const q=new URLSearchParams(location.search).get('lang');
+  const l=(q==='en'||q==='zh')?q:(localStorage.getItem('lang')||'zh');
+  document.documentElement.lang = l==='en' ? 'en' : 'zh-Hant';
+}catch(e){}})();
+</script>
 <title>超高齡社會下的綠色生活｜2026 NCKU 國際工作坊</title>
 <meta name="robots" content="noindex, nofollow">
 <meta property="og:type" content="website">
@@ -49,6 +58,14 @@
   }
   /* 全站單一字族，靠字重與字距分層 */
   .en{letter-spacing:.14em; font-weight:500}
+
+  /* ── 語言切換 ──
+     data-l 的語意是「在這個模式顯示」，不是「這段文字是這種語言」。
+     ABOUT 段的英文摘要標 data-l="zh"，是因為它只屬於中文版面（大段中文＋小字英文），
+     英文模式改用完整英譯，不要把它「修正」成 en。
+     注意：.en / .sub 是排版類別不是語言標記，絕不可拿來當切換依據。 */
+  html[lang^="zh"] [data-l="en"]{display:none}
+  html[lang="en"]  [data-l="zh"]{display:none}
 
   /* 粒子場：固定在最底層，內容區塊的不透明底色會蓋住它，
      所以粒子只在白色留白處看得見 */
@@ -481,6 +498,38 @@
   }
   @media print{ .reveal{animation:none; opacity:1} .day .body{display:block !important} }
 
+  /* ── 語言切換鈕 ──
+     放在 header 外面：header 有 overflow:hidden + clip-path，放進去會被切掉。
+     柔和半透明藥丸、無邊框，右緣對齊 header 的內距公式。
+     會滑過深綠 hero 也會滑過白底，靠 .on-light 換色（見 script）。 */
+  .langsw{
+    position:fixed; top:22px; z-index:50;
+    right:max(22px, calc((100vw - 920px) / 2 + 34px));
+    display:flex; gap:2px; padding:4px; border-radius:999px;
+    /* 深綠紗而非白紗：白紗會把底色提亮，讓 --on-green-soft 文字掉到 2.5:1。
+       實測 hero 合成底約 rgb(75,171,124)，疊 .75 深綠後文字對比 5.13:1 */
+    background:rgba(8,99,58,.75);
+    -webkit-backdrop-filter:blur(10px) saturate(1.2);
+            backdrop-filter:blur(10px) saturate(1.2);
+    box-shadow:0 2px 14px rgba(8,99,58,.10);
+  }
+  .langsw button{
+    border:0; background:none; cursor:pointer; font:inherit; line-height:1;
+    font-size:.74rem; letter-spacing:.14em; font-weight:500;
+    padding:7px 15px; border-radius:999px; color:var(--on-green-soft);
+  }
+  .langsw button[aria-pressed="true"]{background:rgba(255,255,255,.92); color:var(--green-deep)}
+  .langsw button:focus-visible{outline:2px solid #fff; outline-offset:3px}
+  /* 捲離 hero 後坐在白底上 */
+  .langsw.on-light{background:var(--green-mist); box-shadow:0 2px 14px rgba(8,99,58,.08)}
+  .langsw.on-light button{color:var(--green-deep)}
+  .langsw.on-light button[aria-pressed="true"]{background:#fff}
+  .langsw.on-light button:focus-visible{outline-color:var(--green-deep)}
+  @media(prefers-reduced-motion:no-preference){
+    .langsw,.langsw button{transition:background-color .3s ease,color .3s ease,box-shadow .3s ease}
+  }
+  @media print{ .langsw{display:none} }
+
   @media(max-width:640px){
     header{clip-path:polygon(0 0,100% 0,100% 88%,55% 88%,45% 100%,0 92%); padding-left:24px; padding-right:24px}
     .wrap{padding:0 24px}
@@ -516,6 +565,11 @@
 </style>
 </head>
 <body>
+
+<div class="langsw" role="group" aria-label="Language / 語言">
+  <button type="button" data-set-lang="zh" aria-pressed="true" lang="zh-Hant">中文</button>
+  <button type="button" data-set-lang="en" aria-pressed="false" lang="en">English</button>
+</div>
 
 <header class="grain">
   <div class="mapwash"></div>
@@ -1316,6 +1370,50 @@ document.querySelectorAll('.jb').forEach(a => {
     target.scrollIntoView({ block: 'center', behavior: 'smooth' });
   });
 });
+</script>
+
+<script>
+// 語言切換控制器。散文靠 CSS（html[lang] + data-l）切換，這裡只負責
+// 屬性（alt / aria-label / title / meta）、按鈕狀態與保存選擇。
+(() => {
+  const sw = document.querySelector('.langsw');
+  const btns = [...sw.querySelectorAll('button')];
+  const isEn = () => document.documentElement.lang === 'en';
+
+  // applyAttrs：屬性翻譯（Step 3 實作）
+  function applyAttrs(){}
+
+  function setLang(l){
+    document.documentElement.lang = l === 'en' ? 'en' : 'zh-Hant';
+    applyAttrs();
+    btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.setLang === l)));
+    try { localStorage.setItem('lang', l); } catch(e) {}
+    // 網址帶著語言才能分享；用 replaceState — 語言是顯示偏好不是導覽，
+    // 不該在上一頁堆紀錄
+    const u = new URL(location);
+    l === 'en' ? u.searchParams.set('lang','en') : u.searchParams.delete('lang');
+    history.replaceState(null, '', u);
+    // 讓翻頁器重新標記當前頁的 alt
+    document.dispatchEvent(new Event('langchange'));
+  }
+
+  btns.forEach(b => b.addEventListener('click', () => setLang(b.dataset.setLang)));
+
+  // 開場對齊 bootstrap 已設好的 lang（bootstrap 只設 lang，不動按鈕）
+  const cur = isEn() ? 'en' : 'zh';
+  btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.setLang === cur)));
+  applyAttrs();
+
+  // 捲離 hero 就換成白底配色。用 IntersectionObserver 而非 scroll 監聽，
+  // 不用自己寫節流
+  const hero = document.querySelector('header');
+  if (hero && 'IntersectionObserver' in window) {
+    new IntersectionObserver(
+      ([e]) => sw.classList.toggle('on-light', !e.isIntersecting),
+      { rootMargin: '-56px 0px 0px 0px', threshold: 0 }
+    ).observe(hero);
+  }
+})();
 </script>
 </body>
 </html>
