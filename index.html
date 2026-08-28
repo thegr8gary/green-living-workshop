@@ -63,9 +63,11 @@
      data-l 的語意是「在這個模式顯示」，不是「這段文字是這種語言」。
      ABOUT 段的英文摘要標 data-l="zh"，是因為它只屬於中文版面（大段中文＋小字英文），
      英文模式改用完整英譯，不要把它「修正」成 en。
-     注意：.en / .sub 是排版類別不是語言標記，絕不可拿來當切換依據。 */
-  html[lang^="zh"] [data-l="en"]{display:none}
-  html[lang="en"]  [data-l="zh"]{display:none}
+     注意：.en / .sub 是排版類別不是語言標記，絕不可拿來當切換依據。
+     加 !important 是因為像 .grp .topic .sub（0,3,0）這種既有規則會贏過
+     html[lang] [data-l]（0,2,1）——語言切換是頁面層級的開關，不該跟版面規則比權重。 */
+  html[lang^="zh"] [data-l="en"]{display:none !important}
+  html[lang="en"]  [data-l="zh"]{display:none !important}
 
   /* 粒子場：固定在最底層，內容區塊的不透明底色會蓋住它，
      所以粒子只在白色留白處看得見 */
@@ -818,7 +820,7 @@
 
   <section>
     <h3 class="sec"><span class="lbl en">MOMENTS</span><span data-l="zh">工作坊現場</span><span data-l="en">Workshop Moments</span></h3>
-    <p class="lede">每日精選之外的其他現場紀錄。滑鼠移上去可暫停。</p>
+    <p class="lede" data-l="zh">每日精選之外的其他現場紀錄。滑鼠移上去可暫停。</p><p class="lede" data-l="en">Further records from the workshop beyond the daily selections. Hover to pause.</p>
     <div class="wall reveal">
     <div class="col" aria-hidden="true">
       <img class="pic t1" src="assets/photos/d1-05.jpg" alt="" loading="eager" width="1400" height="933">
@@ -947,20 +949,20 @@
 
   <section>
     <h3 class="sec"><span class="lbl en">GROUP OUTCOMES</span><span data-l="zh">各組成果</span><span data-l="en">Group Outcomes</span></h3>
-    <p class="lede">七組提案，點擊開啟各組完整簡報。</p>
+    <p class="lede" data-l="zh">七組提案，點擊開啟各組完整簡報。</p><p class="lede" data-l="en">Seven proposals. Click any group to open its full slide deck.</p>
     <div class="groups">
       <details class="grp reveal" data-g="1" data-total="50">
         <summary>
           <span class="g en">GROUP 1</span>
           <span class="topic">The Green Living Age Society<span class="sub">Preserving Ecosystem Balance for the Future</span></span>
           <span class="mvcb">Site C1　·　Prof. Lu</span>
-          <span class="jump"><a class="jb" href="#g1-video" aria-label="Group 1 影片">影片</a><a class="jb" href="#g1-deck" aria-label="Group 1 簡報">簡報</a></span>
+          <span class="jump"><a class="jb" href="#g1-video" aria-label="Group 1 影片"><span data-l="zh">影片</span><span data-l="en">Video</span></a><a class="jb" href="#g1-deck" aria-label="Group 1 簡報"><span data-l="zh">簡報</span><span data-l="en">Slides</span></a></span>
         </summary>
         <div class="grp-body">
           <video id="g1-video" class="vid" controls preload="none" poster="assets/video/g1-poster.jpg"
                  width="1280" height="720">
             <source src="assets/video/g1.mp4" type="video/mp4">
-            您的瀏覽器不支援影片播放，請<a href="assets/video/g1.mp4">下載影片</a>。
+            <span data-l="zh">您的瀏覽器不支援影片播放，請<a href="assets/video/g1.mp4">下載影片</a>。</span><span data-l="en">Your browser cannot play this video. Please <a href="assets/video/g1.mp4">download it</a>.</span>
           </video>
           <div class="deck" id="g1-deck">
             <div class="stage">
@@ -979,13 +981,13 @@
           <span class="g en">GROUP 2</span>
           <span class="topic">Sound of Cultures</span>
           <span class="mvcb">Site A2　·　Prof. Nawit</span>
-          <span class="jump"><a class="jb" href="#g2-video" aria-label="Group 2 影片">影片</a><a class="jb" href="#g2-deck" aria-label="Group 2 簡報">簡報</a></span>
+          <span class="jump"><a class="jb" href="#g2-video" aria-label="Group 2 影片"><span data-l="zh">影片</span><span data-l="en">Video</span></a><a class="jb" href="#g2-deck" aria-label="Group 2 簡報"><span data-l="zh">簡報</span><span data-l="en">Slides</span></a></span>
         </summary>
         <div class="grp-body">
           <video id="g2-video" class="vid" controls preload="none" poster="assets/video/g2-poster.jpg"
                  width="1280" height="720">
             <source src="assets/video/g2.mp4" type="video/mp4">
-            您的瀏覽器不支援影片播放，請<a href="assets/video/g2.mp4">下載影片</a>。
+            <span data-l="zh">您的瀏覽器不支援影片播放，請<a href="assets/video/g2.mp4">下載影片</a>。</span><span data-l="en">Your browser cannot play this video. Please <a href="assets/video/g2.mp4">download it</a>.</span>
           </video>
           <div class="deck" id="g2-deck">
             <div class="stage">
@@ -1004,13 +1006,13 @@
           <span class="g en">GROUP 3</span>
           <span class="topic">Tainan Green Civic Living Room<span class="sub">Smart Mobility Urban Corridor</span></span>
           <span class="mvcb">Site A1　·　Prof. Apichoke</span>
-          <span class="jump"><a class="jb" href="#g3-video" aria-label="Group 3 影片">影片</a><a class="jb" href="#g3-deck" aria-label="Group 3 簡報">簡報</a></span>
+          <span class="jump"><a class="jb" href="#g3-video" aria-label="Group 3 影片"><span data-l="zh">影片</span><span data-l="en">Video</span></a><a class="jb" href="#g3-deck" aria-label="Group 3 簡報"><span data-l="zh">簡報</span><span data-l="en">Slides</span></a></span>
         </summary>
         <div class="grp-body">
           <video id="g3-video" class="vid" controls preload="none" poster="assets/video/g3-poster.jpg"
                  width="1280" height="720">
             <source src="assets/video/g3.mp4" type="video/mp4">
-            您的瀏覽器不支援影片播放，請<a href="assets/video/g3.mp4">下載影片</a>。
+            <span data-l="zh">您的瀏覽器不支援影片播放，請<a href="assets/video/g3.mp4">下載影片</a>。</span><span data-l="en">Your browser cannot play this video. Please <a href="assets/video/g3.mp4">download it</a>.</span>
           </video>
           <div class="deck" id="g3-deck">
             <div class="stage">
@@ -1027,15 +1029,15 @@
       <details class="grp reveal" data-g="4" data-total="26">
         <summary>
           <span class="g en">GROUP 4</span>
-          <span class="topic">Green Living for the Super-Aged Society<span class="sub">串聯通學安全與多元公共空間</span></span>
+          <span class="topic">Green Living for the Super-Aged Society<span class="sub" data-l="zh">串聯通學安全與多元公共空間</span><span class="sub" data-l="en">Linking safe school routes with diverse public space</span></span>
           <span class="mvcb">Site D2　·　Eric（周黃冠穎）</span>
-          <span class="jump"><a class="jb" href="#g4-video" aria-label="Group 4 影片">影片</a><a class="jb" href="#g4-deck" aria-label="Group 4 簡報">簡報</a></span>
+          <span class="jump"><a class="jb" href="#g4-video" aria-label="Group 4 影片"><span data-l="zh">影片</span><span data-l="en">Video</span></a><a class="jb" href="#g4-deck" aria-label="Group 4 簡報"><span data-l="zh">簡報</span><span data-l="en">Slides</span></a></span>
         </summary>
         <div class="grp-body">
           <video id="g4-video" class="vid" controls preload="none" poster="assets/video/g4-poster.jpg"
                  width="1280" height="720">
             <source src="assets/video/g4.mp4" type="video/mp4">
-            您的瀏覽器不支援影片播放，請<a href="assets/video/g4.mp4">下載影片</a>。
+            <span data-l="zh">您的瀏覽器不支援影片播放，請<a href="assets/video/g4.mp4">下載影片</a>。</span><span data-l="en">Your browser cannot play this video. Please <a href="assets/video/g4.mp4">download it</a>.</span>
           </video>
           <div class="deck" id="g4-deck">
             <div class="stage">
@@ -1054,13 +1056,13 @@
           <span class="g en">GROUP 5</span>
           <span class="topic">Tunnel, Connection of Life</span>
           <span class="mvcb">Site B2　·　Chen（陳侃如）</span>
-          <span class="jump"><a class="jb" href="#g5-video" aria-label="Group 5 影片">影片</a><a class="jb" href="#g5-deck" aria-label="Group 5 簡報">簡報</a></span>
+          <span class="jump"><a class="jb" href="#g5-video" aria-label="Group 5 影片"><span data-l="zh">影片</span><span data-l="en">Video</span></a><a class="jb" href="#g5-deck" aria-label="Group 5 簡報"><span data-l="zh">簡報</span><span data-l="en">Slides</span></a></span>
         </summary>
         <div class="grp-body">
           <video id="g5-video" class="vid" controls preload="none" poster="assets/video/g5-poster.jpg"
                  width="1280" height="720">
             <source src="assets/video/g5.mp4" type="video/mp4">
-            您的瀏覽器不支援影片播放，請<a href="assets/video/g5.mp4">下載影片</a>。
+            <span data-l="zh">您的瀏覽器不支援影片播放，請<a href="assets/video/g5.mp4">下載影片</a>。</span><span data-l="en">Your browser cannot play this video. Please <a href="assets/video/g5.mp4">download it</a>.</span>
           </video>
           <div class="deck" id="g5-deck">
             <div class="stage">
@@ -1079,13 +1081,13 @@
           <span class="g en">GROUP 6</span>
           <span class="topic">Tainan Green Way</span>
           <span class="mvcb">Site B1　·　Prof. Sung</span>
-          <span class="jump"><a class="jb" href="#g6-video" aria-label="Group 6 影片">影片</a><a class="jb" href="#g6-deck" aria-label="Group 6 簡報">簡報</a></span>
+          <span class="jump"><a class="jb" href="#g6-video" aria-label="Group 6 影片"><span data-l="zh">影片</span><span data-l="en">Video</span></a><a class="jb" href="#g6-deck" aria-label="Group 6 簡報"><span data-l="zh">簡報</span><span data-l="en">Slides</span></a></span>
         </summary>
         <div class="grp-body">
           <video id="g6-video" class="vid" controls preload="none" poster="assets/video/g6-poster.jpg"
                  width="1280" height="720">
             <source src="assets/video/g6.mp4" type="video/mp4">
-            您的瀏覽器不支援影片播放，請<a href="assets/video/g6.mp4">下載影片</a>。
+            <span data-l="zh">您的瀏覽器不支援影片播放，請<a href="assets/video/g6.mp4">下載影片</a>。</span><span data-l="en">Your browser cannot play this video. Please <a href="assets/video/g6.mp4">download it</a>.</span>
           </video>
           <div class="deck" id="g6-deck">
             <div class="stage">
@@ -1104,13 +1106,13 @@
           <span class="g en">GROUP 7</span>
           <span class="topic">Building Connections Across Generations<span class="sub">Through Safe and Friendly Greenway</span></span>
           <span class="mvcb">Site D1　·　Cheng（鄭庭婷）</span>
-          <span class="jump"><a class="jb" href="#g7-video" aria-label="Group 7 影片">影片</a><a class="jb" href="#g7-deck" aria-label="Group 7 簡報">簡報</a></span>
+          <span class="jump"><a class="jb" href="#g7-video" aria-label="Group 7 影片"><span data-l="zh">影片</span><span data-l="en">Video</span></a><a class="jb" href="#g7-deck" aria-label="Group 7 簡報"><span data-l="zh">簡報</span><span data-l="en">Slides</span></a></span>
         </summary>
         <div class="grp-body">
           <video id="g7-video" class="vid" controls preload="none" poster="assets/video/g7-poster.jpg"
                  width="1280" height="720">
             <source src="assets/video/g7.mp4" type="video/mp4">
-            您的瀏覽器不支援影片播放，請<a href="assets/video/g7.mp4">下載影片</a>。
+            <span data-l="zh">您的瀏覽器不支援影片播放，請<a href="assets/video/g7.mp4">下載影片</a>。</span><span data-l="en">Your browser cannot play this video. Please <a href="assets/video/g7.mp4">download it</a>.</span>
           </video>
           <div class="deck" id="g7-deck">
             <div class="stage">
@@ -1135,12 +1137,12 @@
         <p class="when en">2026.08.07　09:00–12:30　ROOM 5101</p>
         <h4 class="fhead">Green Living Across Contexts</h4>
         <p class="fsubhead en">Local Practices・Global Dialogues</p>
-        <p class="flede">來自日本、印尼、泰國與台灣的七位學者分享各國經驗，最後以綜合討論收尾。</p>
+        <p class="flede"><span data-l="zh">來自日本、印尼、泰國與台灣的七位學者分享各國經驗，最後以綜合討論收尾。</span><span data-l="en">Seven scholars from Japan, Indonesia, Thailand and Taiwan share experience from their own countries, closing with a panel discussion.</span></p>
         <div class="agenda">
         <div class="fitem op">
           <span class="ftime en">09:00–09:20</span>
           <div class="fmain">
-            <span class="ftitle">開幕・來賓致詞<span class="fsub en">Opening / Guest Remarks</span></span>
+            <span class="ftitle" data-l="zh">開幕・來賓致詞<span class="fsub en">Opening / Guest Remarks</span></span><span class="ftitle" data-l="en">Opening · Guest Remarks</span>
             
           </div>
           <img class="fpic" src="assets/forum/guest-1.jpg" alt="開幕・來賓致詞於論壇發表" data-alt-en="Opening remarks at the forum" loading="lazy" width="1400" height="933">
@@ -1149,7 +1151,7 @@
           <span class="ftime en">09:20–09:40</span>
           <div class="fmain">
             <span class="ftitle">Edible Plantings in Streetscapes as Social Infrastructure for Community Building</span>
-            <span class="fwho">Masayuki Suzuki<span class="faff">千葉大學 Graduate School of Global and Transdisciplinary Studies｜Japan</span></span>
+            <span class="fwho">Masayuki Suzuki<span class="faff" data-l="zh">千葉大學 Graduate School of Global and Transdisciplinary Studies｜Japan</span><span class="faff" data-l="en">Chiba University, Graduate School of Global and Transdisciplinary Studies｜Japan</span></span>
           </div>
           <img class="fpic" src="assets/forum/s1.jpg" alt="Masayuki Suzuki於論壇發表" data-alt-tpl="speaker" data-who="Masayuki Suzuki" loading="lazy" width="1400" height="933">
         </div>
@@ -1157,7 +1159,7 @@
           <span class="ftime en">09:40–10:00</span>
           <div class="fmain">
             <span class="ftitle">Co-Creation and Participatory Design through Appropriate Technology<span class="fsub en">Community Engagement Programs in FTUI</span></span>
-            <span class="fwho">Kemas Ridwan Kurniawan<span class="faff">印尼大學建築系／工學院院長｜Indonesia</span></span>
+            <span class="fwho">Kemas Ridwan Kurniawan<span class="faff" data-l="zh">印尼大學建築系／工學院院長｜Indonesia</span><span class="faff" data-l="en">Dept. of Architecture, Universitas Indonesia / Dean, Faculty of Engineering｜Indonesia</span></span>
           </div>
           <img class="fpic" src="assets/forum/s2.jpg" alt="Kemas Ridwan Kurniawan於論壇發表" data-alt-tpl="speaker" data-who="Kemas Ridwan Kurniawan" loading="lazy" width="1400" height="933">
         </div>
@@ -1165,19 +1167,19 @@
           <span class="ftime en">10:00–10:20</span>
           <div class="fmain">
             <span class="ftitle">Green Living Beyond Green Spaces<span class="fsub en">How Community Learning Creates Age-Friendly and Sustainable Cities</span></span>
-            <span class="fwho">Pronyos Chattarakul<span class="faff">KMUTT Center of Innovation for Society｜Thailand<br><span class="proxy">代為發表：Arunothai Sarigakham</span></span></span>
+            <span class="fwho">Pronyos Chattarakul<span class="faff">KMUTT Center of Innovation for Society｜Thailand<br><span class="proxy" data-l="zh">代為發表：Arunothai Sarigakham</span><span class="proxy" data-l="en">Presented on their behalf by Arunothai Sarigakham</span></span></span>
           </div>
           <img class="fpic" src="assets/forum/s3.jpg" alt="Pronyos Chattarakul於論壇發表" data-alt-tpl="speaker" data-who="Pronyos Chattarakul" loading="lazy" width="1400" height="933">
         </div>
         <div class="fitem brk">
           <span class="ftime en">10:20–10:40</span>
-          <span class="ftitle">休息<span class="fsub en">Break</span></span>
+          <span class="ftitle" data-l="zh">休息<span class="fsub en">Break</span></span><span class="ftitle" data-l="en">Break</span>
         </div>
         <div class="fitem">
           <span class="ftime en">10:40–11:00</span>
           <div class="fmain">
             <span class="ftitle">Green Space Development in Lamphun Municipality</span>
-            <span class="fwho">Apichoke Lekagul<span class="faff">清邁大學建築學院｜Thailand</span></span>
+            <span class="fwho">Apichoke Lekagul<span class="faff" data-l="zh">清邁大學建築學院｜Thailand</span><span class="faff" data-l="en">Faculty of Architecture, Chiang Mai University｜Thailand</span></span>
           </div>
           <img class="fpic" src="assets/forum/s4.jpg" alt="Apichoke Lekagul於論壇發表" data-alt-tpl="speaker" data-who="Apichoke Lekagul" loading="lazy" width="1400" height="933">
         </div>
@@ -1185,7 +1187,7 @@
           <span class="ftime en">11:00–11:20</span>
           <div class="fmain">
             <span class="ftitle">Reconnecting the Aging City<span class="fsub en">Temple Networks for Walkable and Inclusive Living in Chiang Mai Old Town</span></span>
-            <span class="fwho">Nawit Ongsavangchai<span class="faff">清邁大學建築學院｜Thailand</span></span>
+            <span class="fwho">Nawit Ongsavangchai<span class="faff" data-l="zh">清邁大學建築學院｜Thailand</span><span class="faff" data-l="en">Faculty of Architecture, Chiang Mai University｜Thailand</span></span>
           </div>
           <img class="fpic" src="assets/forum/s5.jpg" alt="Nawit Ongsavangchai於論壇發表" data-alt-tpl="speaker" data-who="Nawit Ongsavangchai" loading="lazy" width="1400" height="933">
         </div>
@@ -1193,7 +1195,7 @@
           <span class="ftime en">11:20–11:40</span>
           <div class="fmain">
             <span class="ftitle">Collaborative Design with Visually Impaired Individuals<span class="fsub en">Community-Based Practices for Inclusive Design</span></span>
-            <span class="fwho">Momoka Hirai<span class="faff">日本女子大學建築設計學系｜Japan</span></span>
+            <span class="fwho">Momoka Hirai<span class="faff" data-l="zh">日本女子大學建築設計學系｜Japan</span><span class="faff" data-l="en">Dept. of Architecture and Design, Japan Women’s University｜Japan</span></span>
           </div>
           <img class="fpic" src="assets/forum/s6.jpg" alt="Momoka Hirai於論壇發表" data-alt-tpl="speaker" data-who="Momoka Hirai" loading="lazy" width="1400" height="933">
         </div>
@@ -1201,15 +1203,15 @@
           <span class="ftime en">11:40–12:00</span>
           <div class="fmain">
             <span class="ftitle">From Greenway to Age-Friendly Living Network<span class="fsub en">Community Participation and Urban Transformation in Tainan</span></span>
-            <span class="fwho">Chi-Pang Lu<span class="faff">成功大學建築系｜Taiwan</span></span>
+            <span class="fwho">Chi-Pang Lu<span class="faff" data-l="zh">成功大學建築系｜Taiwan</span><span class="faff" data-l="en">Dept. of Architecture, NCKU｜Taiwan</span></span>
           </div>
           <img class="fpic" src="assets/forum/s7.jpg" alt="Chi-Pang Lu於論壇發表" data-alt-tpl="speaker" data-who="Chi-Pang Lu" loading="lazy" width="1400" height="933">
         </div>
         <div class="fitem op">
           <span class="ftime en">12:00–12:30</span>
           <div class="fmain">
-            <span class="ftitle">綜合討論<span class="fsub en">Open Forum Discussion</span></span>
-            <span class="fwho">Chia-Han Yang<span class="faff">主持｜成大創意產業設計研究所｜Taiwan</span></span>
+            <span class="ftitle" data-l="zh">綜合討論<span class="fsub en">Open Forum Discussion</span></span><span class="ftitle" data-l="en">Open Forum Discussion</span>
+            <span class="fwho">Chia-Han Yang<span class="faff" data-l="zh">主持｜成大創意產業設計研究所｜Taiwan</span><span class="faff" data-l="en">Moderator｜Institute of Creative Industries Design, NCKU｜Taiwan</span></span>
           </div>
           <img class="fpic" src="assets/forum/discussion.jpg" alt="綜合討論：與談學者並排就座，主持人持麥克風發言" data-alt-en="Panel discussion: the scholars seated side by side, the moderator speaking into a microphone" loading="lazy" width="1400" height="934">
         </div>
