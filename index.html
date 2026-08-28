@@ -577,33 +577,42 @@
   <div class="glow" style="width:30vw;height:24vw;top:14%;left:38%"></div>
   <div class="inner">
     <p class="eyebrow en">NCKU INTERNATIONAL WORKSHOP</p>
-    <h1>超高齡社會下的綠色生活</h1>
-    <h2 class="en">Green Living for the Super-Aged Society</h2>
+    <h1 data-l="zh">超高齡社會下的綠色生活</h1><h1 data-l="en">Green Living for the Super-Aged Society</h1>
+    <h2 class="en" data-l="zh">Green Living for the Super-Aged Society</h2>
     <p class="date en">2026.08.01 — 08.07　TAINAN</p>
   </div>
 </header>
 
 <div class="wrap">
   <section>
-    <h3 class="sec"><span class="lbl en">ABOUT</span>關於這場工作坊</h3>
+    <h3 class="sec"><span class="lbl en">ABOUT</span><span data-l="zh">關於這場工作坊</span><span data-l="en">About the Workshop</span></h3>
     <div class="about reveal">
       <div class="ag"></div>
       <div class="ain">
-        <p class="lede">
+        <p class="lede" data-l="zh">
           為期七天的國際設計工作坊，來自日本、印尼、泰國、菲律賓、越南與台灣的師生共同參與。
           以<strong>台南南鐵綠廊北段</strong>為基地，探討高齡化社會中的社區生活、公共空間與在地老化議題，
           七組學員各自提出設計提案。
         </p>
-        <p class="lede sub">
+        <!-- 這段英文摘要屬於「中文版面」的一部分（大段中文＋小字英文），所以標 zh；
+             英文模式改用下面那段完整譯文。不要把它改成 en，否則英文版會出現兩次摘要。 -->
+        <p class="lede sub" data-l="zh">
           A seven-day international design workshop sited on the Northern Section of the South Railway
           Greenway in Tainan — exploring community living, public space, and aging in place.
+        </p>
+        <p class="lede" data-l="en">
+          A seven-day international design workshop bringing together teachers and students from Japan,
+          Indonesia, Thailand, the Philippines, Vietnam and Taiwan. Sited on the
+          <strong>northern section of the Tainan railway greenway</strong>, it explores community life,
+          public space and ageing in place in an ageing society, with seven groups each putting forward
+          a design proposal.
         </p>
       </div>
     </div>
   </section>
 
   <section>
-    <h3 class="sec"><span class="lbl en">SITE</span>基地與選址</h3>
+    <h3 class="sec"><span class="lbl en">SITE</span><span data-l="zh">基地與選址</span><span data-l="en">Site and Site Selection</span></h3>
     <details class="site reveal">
       <summary>
         <span class="tag en">SITE</span>
@@ -702,7 +711,7 @@
   </section>
 
   <section>
-    <h3 class="sec"><span class="lbl en">PROGRAM</span>課程流程</h3>
+    <h3 class="sec"><span class="lbl en">PROGRAM</span><span data-l="zh">課程流程</span><span data-l="en">Programme</span></h3>
     <p class="lede">六天的課程與工作，點開任一天看當日內容與照片。</p>
     <div class="corridor">
       <svg viewBox="0 0 26 900" preserveAspectRatio="none" aria-hidden="true">
@@ -774,7 +783,7 @@
   </section>
 
   <section>
-    <h3 class="sec"><span class="lbl en">MOMENTS</span>工作坊現場</h3>
+    <h3 class="sec"><span class="lbl en">MOMENTS</span><span data-l="zh">工作坊現場</span><span data-l="en">Workshop Moments</span></h3>
     <p class="lede">每日精選之外的其他現場紀錄。滑鼠移上去可暫停。</p>
     <div class="wall reveal">
     <div class="col" aria-hidden="true">
@@ -903,7 +912,7 @@
   </section>
 
   <section>
-    <h3 class="sec"><span class="lbl en">GROUP OUTCOMES</span>各組成果</h3>
+    <h3 class="sec"><span class="lbl en">GROUP OUTCOMES</span><span data-l="zh">各組成果</span><span data-l="en">Group Outcomes</span></h3>
     <p class="lede">七組提案，點擊開啟各組完整簡報。</p>
     <div class="groups">
       <details class="grp reveal" data-g="1" data-total="50">
@@ -1085,7 +1094,7 @@
   </section>
 
   <section>
-    <h3 class="sec"><span class="lbl en">INTERNATIONAL FORUM</span>國際論壇</h3>
+    <h3 class="sec"><span class="lbl en">INTERNATIONAL FORUM</span><span data-l="zh">國際論壇</span><span data-l="en">International Forum</span></h3>
     <div class="forum reveal">
       <div class="fglow"></div>
       <div class="fin">
@@ -1182,8 +1191,10 @@
   </section>
 
   <footer>
-    超高齡社會下的綠色生活　Green Living for the Super-Aged Society<br>
-    國立成功大學　·　Made by Gary with Claude Code
+    <span data-l="zh">超高齡社會下的綠色生活　Green Living for the Super-Aged Society<br>
+    國立成功大學　·　Made by Gary with Claude Code</span>
+    <span data-l="en">Green Living for the Super-Aged Society<br>
+    National Cheng Kung University　·　Made by Gary with Claude Code</span>
   </footer>
 </div>
 
